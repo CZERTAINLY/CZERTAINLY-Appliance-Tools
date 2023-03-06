@@ -5,3 +5,4 @@ debian/czertainly-appliance-tools.substvars
 debian/debhelper-build-stamp
 debian/files
 debian/install
+debian/copyright
