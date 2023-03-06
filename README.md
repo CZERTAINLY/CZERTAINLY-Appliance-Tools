@@ -1,12 +1,11 @@
 # CZERTAINLY-Appliance-Tools
 Debian package with czertainly appliance tools.
 
-# 
-Content of `/etc/czertainly-ansible` directory for CZERTAINLY appliance.
+## /etc/czertainly-ansible
 
-git submodule [howto](https://www.vogella.com/tutorials/GitSubmodules/article.html#delete-a-submodule-from-a-repository).
+Content of directory `/etc/czertainly-ansible/roles` is initalized as [git submodule](https://www.vogella.com/tutorials/GitSubmodules/article.html#delete-a-submodule-from-a-repository).
 
-## Intialization was done:
+### First time intialization
 ```
 cd CZERTAINLY-Appliance-Tools
 git submodule add -b develop https://github.com/3KeyCompany/ansible-role-czertainly-branding.git etc/czertainly-ansible/roles/branding
@@ -17,7 +16,8 @@ git submodule add -b develop https://github.com/3KeyCompany/ansible-role-rke2.gi
 git submodule add -b develop https://github.com/3KeyCompany/ansible-role-czertainly.git etc/czertainly-ansible/roles/czertainly
 ```
 
-## Update after checkout
+### Update after checkout
 ```
-git submodule update --init --recursive -j 8
+cd CZERTAINLY-Appliance-Tools
+git submodule update --init --recursive
 ```
