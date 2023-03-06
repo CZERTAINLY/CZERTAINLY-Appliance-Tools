@@ -6,6 +6,6 @@ echo -n "Creating $install: "
     grep -v \.git | grep -v \.travis > $install
 echo "done."
 
-cp -f LICENCE debian/copyright
+cp -f LICENSE debian/copyright
 
 debuild -us -uc
