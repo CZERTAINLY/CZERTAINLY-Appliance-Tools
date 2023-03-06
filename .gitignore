@@ -1,0 +1,7 @@
+*~
+debian/.debhelper
+debian/czertainly-appliance-tools/*
+debian/czertainly-appliance-tools.substvars
+debian/debhelper-build-stamp
+debian/files
+debian/install
