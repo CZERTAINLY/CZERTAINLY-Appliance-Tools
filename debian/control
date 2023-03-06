@@ -6,8 +6,6 @@ Maintainer: Jan Tomasek <jan.tomasek@3key.company>
 Standards-Version: 4.5.1
 
 Package: czertainly-appliance-tools
-Version: 2.6.0
-Maintainer: Jakub Moravek <jakub.moravek@3key.company>
 Depends:
 Architecture: all
 Homepage: http://czertainly.com
