@@ -11,4 +11,5 @@ Maintainer: Jakub Moravek <jakub.moravek@3key.company>
 Depends:
 Architecture: all
 Homepage: http://czertainly.com
-Description: Tools to manage CZERTAINLY appliance task like CZERTAINLY installation, upgrade, etc.
+Description: Tools to manage CZERTAINLY appliance tasks like
+  CZERTAINLY installation, upgrade, etc.
