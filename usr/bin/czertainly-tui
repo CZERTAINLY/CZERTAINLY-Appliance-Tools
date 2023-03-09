@@ -52,12 +52,12 @@ advancedMenu=(
     'shutdown'           'Shutdown system'
     'exit'               "Exit advanced menu"
 )
-proxySettings='/etc/ansible/vars/proxy.yml'
-dockerSettings='/etc/ansible/vars/docker.yml'
-czertainlySettings='/etc/ansible/vars/czertainly.yml'
-databaseSettings='/etc/ansible/vars/database.yml'
-ingressSettings='/etc/ansible/vars/ingress.yml'
-trustedCASettings='/etc/ansible/vars/trustedCA.yml'
+proxySettings='/etc/czertainly-ansible/vars/proxy.yml'
+dockerSettings='/etc/czertainly-ansible/vars/docker.yml'
+czertainlySettings='/etc/czertainly-ansible/vars/czertainly.yml'
+databaseSettings='/etc/czertainly-ansible/vars/database.yml'
+ingressSettings='/etc/czertainly-ansible/vars/ingress.yml'
+trustedCASettings='/etc/czertainly-ansible/vars/trustedCA.yml'
 rkeUninstall='/usr/local/bin/rke2-uninstall.sh'
 kubectl='/var/lib/rancher/rke2/bin/kubectl'
 
@@ -980,7 +980,7 @@ main() {
 	    then
 		logger "$p: install confirmed"
 		execAnsible \
-		    "sudo /usr/bin/ansible-playbook /etc/ansible/playbooks/czertainly.yml" \
+		    "sudo /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml" \
 		    "full-install"
 	    else
 		logger "$p: install canceled"
