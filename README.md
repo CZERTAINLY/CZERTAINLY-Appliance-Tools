@@ -3,7 +3,7 @@ Debian package with czertainly appliance tools.
 
 ## Content of etc/czertainly-ansible
 
-Is created as [git submodule](https://www.vogella.com/tutorials/GitSubmodules/article.html#delete-a-submodule-from-a-repository).
+Is created as [git submodule](https://www.vogella.com/tutorials/GitSubmodules/article.html).
 
 ### First time intialization
 ```
@@ -20,6 +20,16 @@ git submodule add -b develop https://github.com/3KeyCompany/ansible-role-czertai
 ```
 cd CZERTAINLY-Appliance-Tools
 git submodule update --init --recursive
+```
+
+### Update after changes in submodules
+```
+cd CZERTAINLY-Appliance-Tools
+git submodule foreach 'git fetch origin; \
+  git checkout $(git rev-parse --abbrev-ref HEAD); \
+  git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); \
+  git submodule update --recursive; \
+  git clean -dfx'
 ```
 
 ## Building package
