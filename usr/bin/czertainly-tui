@@ -21,6 +21,10 @@ applianceIP=`ip address show dev eth0 | grep -w inet | awk '{print $2}' | sed "s
 umask 002
 
 export CZERTAINLY_TUI="ACTIVE"
+if [ "x$ANSIBLE_CONFIG" == "x" ]
+then
+   export ANSIBLE_CONFIG=/etc/czertainly-ansible/ansible.cfg
+fi
 
 backTitle="CZERTAINLY Appliance ($applianceVersion; $applianceIP)"
 mainMenu=(

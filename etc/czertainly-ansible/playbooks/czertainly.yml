@@ -44,7 +44,7 @@
   environment: '{{ proxy_env|dict2items|rejectattr("value", "equalto", "")|list|items2dict }}'
 
   roles:
-    - role: http_proxy
+    - role: http-proxy
     - role: postgres
     - role: helm
     - role: rke2
