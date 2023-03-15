@@ -3,6 +3,7 @@ Defaults  env_keep += "ANSIBLE_CONFIG"
 czertainly ALL = NOPASSWD: /sbin/shutdown -r now
 czertainly ALL = NOPASSWD: /sbin/shutdown -h now
 czertainly ALL = NOPASSWD: /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml
+czertainly ALL = NOPASSWD: /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --tags http_proxy
 czertainly ALL = NOPASSWD: /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --diff
 czertainly ALL = NOPASSWD: /usr/local/bin/rke2-uninstall.sh
 czertainly ALL = NOPASSWD: /usr/local/bin/update-hostname.sh

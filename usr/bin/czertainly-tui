@@ -372,6 +372,10 @@ proxy:" > $newSettings
 		cp $newSettings $settings
 		rm $newSettings
 		logger "$p: settings changed $settings rewritten"
+		execAnsible \
+		    "sudo /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --tags http_proxy" \
+		    "http_proxy"
+		logger "$p: ansible finished"
 	    fi
 	else
 	    logger "$p: all parameters are empty - zeroizing $settings"
@@ -905,9 +909,12 @@ execAnsible() {
     if [ $result == 0 ]
     then
 	echo "Ansible finished successfully, result code: $result"
-	echo ""
-	echo "Status of Kubernetes and CZERTAINLY"
-	/usr/bin/czertainly-status
+	if [ "x$mode" == 'xfull-install' ]
+	then
+	    echo ""
+	    echo "Status of Kubernetes and CZERTAINLY"
+	    /usr/bin/czertainly-status
+	fi
     else
 	echo "Ansible failed with error code: $result".
 	echo ""
@@ -917,7 +924,7 @@ to contact support please provide content of file /var/log/ansible.log"
     fi
 
     echo "press enter key to continue"
-    read
+    read < /dev/tty
 }
 
 status() {
