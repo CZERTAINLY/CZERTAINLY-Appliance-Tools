@@ -4,6 +4,9 @@ set -e
 
 . /usr/share/debconf/confmodule
 
+# create user & group
+# https://www.debian.org/doc/manuals/securing-debian-manual/bpp-lower-privs.en.html
+
 # allow czertainly user to modify variables
 if ! dpkg-statoverride --list /etc/czertainly-ansible/vars >/dev/null 2>&1
 then
