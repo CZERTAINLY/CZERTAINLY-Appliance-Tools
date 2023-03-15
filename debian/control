@@ -1,5 +1,5 @@
 Source: czertainly-appliance-tools
-Section: interpreters
+Section: utils
 Priority: optional
 Build-Depends: debhelper (>= 3.0.5), perl (>= 5.24)
 Maintainer: Jan Tomasek <jan.tomasek@3key.company>
