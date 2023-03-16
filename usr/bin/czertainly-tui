@@ -48,7 +48,7 @@ advancedMenu=(
 #    'installRKE2'        "Install only RKE2 - Rancher\'s next-generation Kubernetes distribution"
 #    'verifyRKE2'         'Verify kubernetes',
 #    'installC'           'Install only CZERTAINLY'
-    'update'             'Update Operating System',
+    'update'             'Update Operating System'
     'removeC'            'Remove CZERTAINLY'
     'remove'             'Remove RKE2 & CZERTAINLY'
     'shell'              'Enter system shell'
