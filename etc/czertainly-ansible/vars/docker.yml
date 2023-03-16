@@ -8,5 +8,5 @@ docker:
   server: harbor.3key.company
   email: vmi-int@3key.company
   secret: regcred
-  username: <username>
-  password: <password>
+#  username: <username>
+#  password: <password>
