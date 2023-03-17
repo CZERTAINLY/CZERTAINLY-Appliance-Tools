@@ -8,7 +8,7 @@ echo "done."
 
 cp -f LICENSE debian/copyright
 
-debuild -us -uc
+dpkg-buildpackage -b -us -uc
 
 name=`cat debian/files |grep \.deb | sed 's/ .*$//'`
 
