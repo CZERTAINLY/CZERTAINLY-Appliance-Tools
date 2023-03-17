@@ -15,8 +15,12 @@ jobs:
     - name: Build package
       run: ./build-deb.sh
 
+    - name: List files in the repository
+      run: |
+        ls ${{ github.workspace }}
+
     - name: Upload package artifact
       uses: actions/upload-artifact@v2
       with:
         name: czertainly-appliance-tools
-        path: ../czertainly-appliance-tools*.deb
+        path: ${{ github.workspace }}/czertainly-appliance-tools*.deb
