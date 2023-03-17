@@ -19,6 +19,12 @@ jobs:
       run: |
         ls -lRta ${{ github.workspace }}
 
+    - name: action path
+      run: echo ${{ github.action_path }}
+
+    - name: event path 
+      run: echo ${{ github.event_path }}
+
     - name: Upload package artifact
       uses: actions/upload-artifact@v2
       with:
