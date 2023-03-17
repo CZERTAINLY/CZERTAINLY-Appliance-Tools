@@ -17,10 +17,10 @@ jobs:
 
     - name: List files in the repository
       run: |
-        ls ${{ github.workspace }}
+        ls -lRta ${{ github.workspace }}
 
     - name: Upload package artifact
       uses: actions/upload-artifact@v2
       with:
         name: czertainly-appliance-tools
-        path: ${{ github.workspace }}/czertainly-appliance-tools*.deb
+        path: ${{ github.workspace }}/../czertainly-appliance-tools*.deb
