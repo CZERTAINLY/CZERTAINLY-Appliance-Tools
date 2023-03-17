@@ -14,3 +14,9 @@ jobs:
 
     - name: Build package
       run: ./build-deb.sh
+
+    - name: Upload package artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: czertainly-appliance-tools
+        path: ../czertainly-appliance-tools*.deb
