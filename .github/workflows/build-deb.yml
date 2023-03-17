@@ -26,7 +26,7 @@ jobs:
       run: echo ${{ github.event_path }}
 
     - name: ls
-      run: ls -l ../${{ github.workspace }}
+      run: ls -l /home/runner/work/CZERTAINLY-Appliance-Tools/*
 
     - name: Upload package artifact
       uses: actions/upload-artifact@v2
