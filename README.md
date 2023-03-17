@@ -5,7 +5,7 @@ Debian package with czertainly appliance tools.
 
 Is created as [git submodule](https://www.vogella.com/tutorials/GitSubmodules/article.html).
 
-### First time intialization
+### First time initialization
 ```
 cd CZERTAINLY-Appliance-Tools
 git submodule add -b develop https://github.com/3KeyCompany/ansible-role-czertainly-branding.git etc/czertainly-ansible/roles/branding
@@ -35,5 +35,8 @@ git submodule foreach 'git fetch origin; \
 ## Building package
 
 ```
-build-deb.sh
+./build-deb.sh
 ```
+
+Final deb file is moved to current directory to be accessible in
+GitHub actions.
