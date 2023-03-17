@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Install build dependencies
       run: sudo apt-get update && sudo apt-get -y install debhelper dpkg-dev
@@ -16,7 +16,7 @@ jobs:
       run: ./build-deb.sh
 
     - name: Upload package artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: czertainly-appliance-tools
         path: ${{ github.workspace }}/czertainly-appliance-tools*.deb
