@@ -14,7 +14,7 @@ echo "done."
 
 cp -f LICENSE debian/copyright
 
-dpkg-buildpackage -b -us -uc
+dpkg-buildpackage -b -us -uc --compression=xz
 
 ls -la ../
 
