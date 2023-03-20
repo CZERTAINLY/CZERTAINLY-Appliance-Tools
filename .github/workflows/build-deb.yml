@@ -16,9 +16,6 @@ jobs:
       - name: Build package
         run: ./build-deb.sh
 
-      - name: Show files to be instaled
-        run: cat debian/install
-
       - name: Upload package artifact
         uses: actions/upload-artifact@v3
         with:
@@ -33,5 +30,5 @@ jobs:
           host: ${{ vars.DEB_REPO_HOST }}
           user: ${{ vars.DEB_REPO_USER }}
           key: ${{ secrets.DEB_REPO_KEY }}
-          pre_upload: echo "This will be executed before the upload!"
+          pre_upload: ls -l "${{ vars.DEB_REPO_DIRECTORY }}/*.deb"; rm "${{ vars.DEB_REPO_DIRECTORY }}/*.deb"
           post_upload: sudo ${{ vars.DEB_REPO_MANAGER }} add ${{ github.ref_name }} ${{ vars.DEB_REPO_DIRECTORY }}/czertainly-appliance-tools*.deb; echo "Finished with error code $?"
