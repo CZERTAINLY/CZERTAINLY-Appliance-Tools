@@ -22,7 +22,7 @@ jobs:
     #     path: ${{ github.workspace }}/czertainly-appliance-tools*.deb
 
     - name: Publish package
-      uses: mdallasanta/ssh-scp-deploy@latest
+      uses: mdallasanta/ssh-scp-deploy@v1.2.0
       with:
         local: 'czertainly-appliance-tools*deb'
         remote: '~/'
