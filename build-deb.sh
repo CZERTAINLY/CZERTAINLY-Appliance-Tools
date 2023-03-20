@@ -16,6 +16,8 @@ cp -f LICENSE debian/copyright
 
 dpkg-buildpackage -b -us -uc --compression=xz
 
+file ../*.deb
+
 ls -la ../
 
 name=`cat debian/files |grep \.deb | sed 's/ .*$//'`
