@@ -21,19 +21,15 @@ jobs:
     #     name: czertainly-appliance-tools
     #     path: ${{ github.workspace }}/czertainly-appliance-tools*.deb
 
-
-    - run: echo "${{ vars.DEB_REPO_HOST }}"
-    - run: echo "${{ secrets.DEB_REPO_KEY }}"
-    - run: echo "${{ env.DEB_REPO_HOST }}"
-    - run: echo "${{ env.DEB_REPO_USER }}"
+    - run: echo "${{ env.GITHUB_BASE_REF }}"
 
     - name: Publish package
       uses: mdallasanta/ssh-scp-deploy@v1.2.0
       with:
         local: 'czertainly-appliance-tools*deb'
-        remote: '~/'
+        remote: ${{ vars.DEB_REPO_DIRECTORY }}
         host: ${{ vars.DEB_REPO_HOST }}
         user: ${{ vars.DEB_REPO_USER }}
         key: ${{ secrets.DEB_REPO_KEY }}
         pre_upload: echo "This will be executed before the upload!"
-        post_upload: echo "This will be executed after the upload!"
+        post_upload: sudo ${{ vars.DEB_REPO_MANAGER }} add "${{ env.GITHUB_BASE_REF }}" "${{ vars.DEB_REPO_DIRECTORY }}/czertainly-appliance-tools*deb"
