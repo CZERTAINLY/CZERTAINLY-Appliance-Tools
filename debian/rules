@@ -4,8 +4,7 @@ DH_VERBOSE = 1
 %:
 	dh $@
 
-# ubuntu is using zstd which isn't permited for packages on Debian
-# Bullseye
-
+# Ubuntu is using zstd which isn't permited for packages on Debian
+# Bullseye, so forcing older commpresion algorithm.
 override_dh_builddeb:
 	dh_builddeb -- -Zxz
