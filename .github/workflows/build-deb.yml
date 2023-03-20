@@ -21,7 +21,7 @@ jobs:
     #     name: czertainly-appliance-tools
     #     path: ${{ github.workspace }}/czertainly-appliance-tools*.deb
 
-    - run: echo "${{ env.GITHUB_BASE_REF }}"
+    - run: echo "${{ GITHUB_BASE_REF }}"
 
     - name: Publish package
       uses: mdallasanta/ssh-scp-deploy@v1.2.0
@@ -32,4 +32,4 @@ jobs:
         user: ${{ vars.DEB_REPO_USER }}
         key: ${{ secrets.DEB_REPO_KEY }}
         pre_upload: echo "This will be executed before the upload!"
-        post_upload: sudo ${{ vars.DEB_REPO_MANAGER }} add "${{ env.GITHUB_BASE_REF }}" "${{ vars.DEB_REPO_DIRECTORY }}/czertainly-appliance-tools*deb"
+        post_upload: sudo ${{ vars.DEB_REPO_MANAGER }} add "${{ GITHUB_BASE_REF }}" "${{ vars.DEB_REPO_DIRECTORY }}/czertainly-appliance-tools*deb"
