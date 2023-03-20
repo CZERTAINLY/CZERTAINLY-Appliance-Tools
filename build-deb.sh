@@ -16,15 +16,10 @@ cp -f LICENSE debian/copyright
 
 dpkg-buildpackage -b -us -uc
 
-file ../*.deb
-
-ls -la ../
-
 name=`cat debian/files |grep \.deb | sed 's/ .*$//'`
 
 # https://pmhahn.github.io/debian-oot-build/
 echo "moving package file $name to current directory"
 mv -f "../$name" .
-
 ls -l *deb
 
