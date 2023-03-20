@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 install='debian/install'
 echo -n "Creating $install: "
 (find ./etc -type f; find ./usr -type f) |\
@@ -14,5 +16,5 @@ name=`cat debian/files |grep \.deb | sed 's/ .*$//'`
 
 # https://pmhahn.github.io/debian-oot-build/
 echo "moving package file $name to current directory"
-mv "../$name" .
+mv -f "../$name" .
 

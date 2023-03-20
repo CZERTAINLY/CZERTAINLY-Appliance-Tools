@@ -16,15 +16,14 @@ jobs:
       - name: Build package
         run: ./build-deb.sh
 
+      - name: Show files to be instaled
+        run: cat debian/install
+
       - name: Upload package artifact
         uses: actions/upload-artifact@v3
         with:
           name: czertainly-appliance-tools
           path: ${{ github.workspace }}/czertainly-appliance-tools*.deb
-
-      - run: set
-
-      - run: echo ${{ github.ref_name }}
 
       - name: Publish package
         uses: mdallasanta/ssh-scp-deploy@v1.2.0
