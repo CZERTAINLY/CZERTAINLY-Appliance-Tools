@@ -1,6 +1,10 @@
 #!/bin/bash
 
 set -e
+echo "-------------"
+set
+echo "-------------"
+git submodule update --init --recursive
 
 install='debian/install'
 echo -n "Creating $install: "
@@ -11,6 +15,8 @@ echo "done."
 cp -f LICENSE debian/copyright
 
 dpkg-buildpackage -b -us -uc
+
+ls -la ../
 
 name=`cat debian/files |grep \.deb | sed 's/ .*$//'`
 
