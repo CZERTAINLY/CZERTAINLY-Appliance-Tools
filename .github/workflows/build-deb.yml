@@ -22,10 +22,10 @@ jobs:
     #     path: ${{ github.workspace }}/czertainly-appliance-tools*.deb
 
 
-    - run: echo ${{ secrets.DEB_REPO_HOST }}
-    - run: echo ${{ secrets.DEB_REPO_KEY }}
-    - run: echo ${{ env.DEB_REPO_HOST }}
-    - run: echo ${{ env.DEB_REPO_USER }}
+    - run: echo "${{ secrets.DEB_REPO_HOST }}"
+    - run: echo "${{ secrets.DEB_REPO_KEY }}"
+    - run: echo "${{ env.DEB_REPO_HOST }}"
+    - run: echo "${{ env.DEB_REPO_USER }}"
 
     - name: Publish package
       uses: mdallasanta/ssh-scp-deploy@v1.2.0
