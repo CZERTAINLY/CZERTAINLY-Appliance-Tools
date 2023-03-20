@@ -3,3 +3,9 @@ DH_VERBOSE = 1
 
 %:
 	dh $@
+
+# ubuntu is using zstd which isn't permited for packages on Debian
+# Bullseye
+
+override_dh_builddeb:
+	dh_builddeb -- -Zxz
