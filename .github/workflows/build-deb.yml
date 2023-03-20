@@ -32,8 +32,8 @@ jobs:
       with:
         local: 'czertainly-appliance-tools*deb'
         remote: '~/'
-        host: ${{ env.DEB_REPO_HOST }}
-        user: ${{ env.DEB_REPO_USER }}
+        host: ${{ vars.DEB_REPO_HOST }}
+        user: ${{ vars.DEB_REPO_USER }}
         key: ${{ secrets.DEB_REPO_KEY }}
         pre_upload: echo "This will be executed before the upload!"
         post_upload: echo "This will be executed after the upload!"
