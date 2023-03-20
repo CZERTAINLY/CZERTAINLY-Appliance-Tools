@@ -1,5 +1,5 @@
 *~
-*.deb
+#*.deb
 debian/.debhelper
 debian/czertainly-appliance-tools/*
 debian/czertainly-appliance-tools.substvars

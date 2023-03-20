@@ -12,6 +12,7 @@ dpkg-buildpackage -b -us -uc
 
 name=`cat debian/files |grep \.deb | sed 's/ .*$//'`
 
+# https://pmhahn.github.io/debian-oot-build/
 echo "moving package file $name to current directory"
 mv "../$name" .
 

@@ -9,14 +9,25 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install build dependencies
-      run: sudo apt-get update && sudo apt-get -y install debhelper dpkg-dev
+    # - name: Install build dependencies
+    #   run: sudo apt-get update && sudo apt-get -y install debhelper dpkg-dev
 
-    - name: Build package
-      run: ./build-deb.sh
+    # - name: Build package
+    #   run: ./build-deb.sh
 
-    - name: Upload package artifact
-      uses: actions/upload-artifact@v3
+    # - name: Upload package artifact
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: czertainly-appliance-tools
+    #     path: ${{ github.workspace }}/czertainly-appliance-tools*.deb
+
+    - name: Publish package
+      uses: mdallasanta/ssh-scp-deploy@{version}
       with:
-        name: czertainly-appliance-tools
-        path: ${{ github.workspace }}/czertainly-appliance-tools*.deb
+        local: 'czertainly-appliance-tools*deb'
+        remote: '~/'
+        host: ${{ DEB_REPO_HOST }}
+        user: ${{ DEB_REPO_USER }}
+        key: ${{ secrets.DEB_REPO_KEY }}
+        pre_upload: echo "This will be executed before the upload!"
+        post_upload: echo "This will be executed after the upload!"
