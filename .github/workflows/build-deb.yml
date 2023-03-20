@@ -23,6 +23,8 @@ jobs:
 
     - run: set
 
+    - run: echo ${{ github.ref }}
+
     - name: Publish package
       uses: mdallasanta/ssh-scp-deploy@v1.2.0
       with:
@@ -32,4 +34,4 @@ jobs:
         user: ${{ vars.DEB_REPO_USER }}
         key: ${{ secrets.DEB_REPO_KEY }}
         pre_upload: echo "This will be executed before the upload!"
-        post_upload: sudo ${{ vars.DEB_REPO_MANAGER }} add $GITHUB_BASE_REF "${{ vars.DEB_REPO_DIRECTORY }}/czertainly-appliance-tools*deb"
+        post_upload: sudo ${{ vars.DEB_REPO_MANAGER }} add ${{ github.ref }} "${{ vars.DEB_REPO_DIRECTORY }}/czertainly-appliance-tools*deb"
