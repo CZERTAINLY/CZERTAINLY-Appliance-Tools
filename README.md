@@ -40,3 +40,12 @@ git submodule foreach 'git fetch origin; \
 
 Final deb file is moved to current directory to be accessible in
 GitHub actions.
+
+## GitHub action configuratin
+
+`DEB_REPO_KEY` - **secret** with private key of the user on `DEB_REPO_HOST`
+
+`DEB_REPO_HOST` - hostname o host where repository is installed
+`DEB_REPO_USER` - user used for publishing Debian package
+`DEB_REPO_DIRECTORY` - directory where to put a new package (/var/www/deb.czertainly.com/incoming)
+`DEB_REPO_MANAGER` - script used for managing debian repositoy (/var/www/deb.czertainly.com/manage-repository)
