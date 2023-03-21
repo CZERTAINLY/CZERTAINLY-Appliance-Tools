@@ -1,3 +1,9 @@
+czertainly-appliance-tools (2.6.0~rc10) stable; urgency=medium
+
+  * updated for reworked appliance
+
+ -- Jan Tomášek <jan.tomasek@3key.company>  Mon, 20 Mar 2023 8:18:00 +0100
+
 czertainly-appliance-tools (2.6.0~rc9) stable; urgency=medium
 
   * updated for reworked appliance
