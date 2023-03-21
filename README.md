@@ -49,7 +49,7 @@ GitHub actions.
 
 ### Repository Variables
 
-`DEB_REPO_HOST` - hostname o host where repository is installed
+`DEB_REPO_HOST` - hostname of host where repository is installed
 
 `DEB_REPO_USER` - username of user used for publishing Debian package on `DEB_REPO_HOST`
 
