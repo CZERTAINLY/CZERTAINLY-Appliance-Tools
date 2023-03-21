@@ -9,7 +9,7 @@ for ns in ${NS[@]};
 do
     tmpf=`mktemp /tmp/$1-$ns-XXXX`
     cmd="$kubectl get pods -n "$ns" --no-headers=true"
-    if output=$(sudo $cmd 2>&1 >$tmpf)
+    if output=$(sudo $cmd 2>&1 | grep -v 'ingress-nginx-controller.*Pending' >$tmpf)
     then
 	total_cnt=`cat $tmpf | wc -l`
 	running_cnt=`cat $tmpf | tr -s ' ' | cut -f 3 -d ' ' | grep Running | wc -l`
