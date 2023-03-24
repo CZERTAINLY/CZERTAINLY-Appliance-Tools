@@ -1,0 +1,62 @@
+czertainly-appliance-tools (2.6.0~rc10) stable; urgency=medium
+
+  * updated for reworked appliance
+
+ -- Jan Tomášek <jan.tomasek@3key.company>  Mon, 20 Mar 2023 8:18:00 +0100
+
+czertainly-appliance-tools (2.6.0~rc9) stable; urgency=medium
+
+  * updated for reworked appliance
+
+ -- Jan Tomášek <jan.tomasek@3key.company>  Mon, 20 Mar 2023 8:18:00 +0100
+
+czertainly-appliance-tools (0.5.2) stable; urgency=medium
+
+  * bug fix - removed typos in the script header
+
+ -- Jakub Moravek <jakub.moravek@3key.company>  Fri, 4 Nov 2022 8:13:00 +0100
+
+czertainly-appliance-tools (0.5.1) stable; urgency=medium
+
+  * proxy bug fix
+
+ -- Jakub Moravek <jakub.moravek@3key.company>  Mon, 17 Oct 2022 13:21:00 +0100
+
+czertainly-appliance-tools (0.5.0) stable; urgency=medium
+
+  * added RKE2 to install
+
+ -- Jakub Moravek <jakub.moravek@3key.company>  Mon, 17 Oct 2022 00:13:00 +0100
+
+czertainly-appliance-tools (0.4.1) stable; urgency=medium
+
+  * fixed errors in resetnode function
+
+ -- Jakub Moravek <jakub.moravek@3key.company>  Sat, 15 Oct 2022 10:50:00 +0100
+
+czertainly-appliance-tools (0.4.0) stable; urgency=medium
+
+  * Updated new helm chart type
+  * Added changenet, resetnode, generatecsr, upgrade and uninstall
+
+ -- Jakub Moravek <jakub.moravek@3key.company>  Fri, 14 Oct 2022 9:30:00 +0100
+
+czertainly-appliance-tools (0.3.0) stable; urgency=medium
+
+  * Updated new helm chart type
+
+ -- Jakub Moravek <jakub.moravek@3key.company>  Tue, 6 Oct 2022 0:02:00 +0100
+
+czertainly-appliance-tools (0.2.1) stable; urgency=medium
+
+  * Fixed script name.
+  * Removed harcoded username and password
+  * Harcoded DB hostnamre changed to dynamically created one
+
+ -- Jakub Moravek <jakub.moravek@3key.company>  Tue, 4 Oct 2022 9:58:00 +0100
+
+czertainly-appliance-tools (0.2.0) stable; urgency=medium
+
+  * Initial version
+
+ -- Jakub Moravek <jakub.moravek@3key.company>  Thu, 29 Sep 2022 10:58:00 +0100

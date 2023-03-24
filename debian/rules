@@ -1,0 +1,10 @@
+#!/usr/bin/make -f
+DH_VERBOSE = 1
+
+%:
+	dh $@
+
+# Ubuntu is using zstd which isn't permited for packages on Debian
+# Bullseye, so forcing older commpresion algorithm.
+override_dh_builddeb:
+	dh_builddeb -- -Zxz
