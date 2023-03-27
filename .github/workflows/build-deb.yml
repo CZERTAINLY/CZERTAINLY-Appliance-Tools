@@ -1,4 +1,6 @@
 ---
+runs-on: self-hosted
+
 on:
   push:
     branches: [main, develop]
