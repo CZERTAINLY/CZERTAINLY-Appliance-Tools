@@ -1,3 +1,9 @@
+czertainly-appliance-tools (2.6.0~rc12) stable; urgency=medium
+
+  * add dependency on bash-completion
+
+ -- Jan Tomášek <jan.tomasek@3key.company>  Mon, 30 Mar 2023 21:22:00 +0100
+
 czertainly-appliance-tools (2.6.0~rc11) stable; urgency=medium
 
   * updated czertainly role to 56eb27c

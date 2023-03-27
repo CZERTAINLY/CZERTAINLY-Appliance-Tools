@@ -6,7 +6,7 @@ Maintainer: Jan Tomasek <jan.tomasek@3key.company>
 Standards-Version: 4.5.1
 
 Package: czertainly-appliance-tools
-Depends: ansible, dialog
+Depends: ansible, dialog, bash-completion
 Architecture: all
 Homepage: http://czertainly.com
 Description: Tools to manage CZERTAINLY appliance tasks like
