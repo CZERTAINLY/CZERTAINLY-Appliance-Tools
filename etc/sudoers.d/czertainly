@@ -1,4 +1,5 @@
 Defaults  env_keep += "ANSIBLE_CONFIG"
+Defaults  secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/var/lib/rancher/rke2/bin"
 
 czertainly ALL = NOPASSWD: /sbin/shutdown -r now
 czertainly ALL = NOPASSWD: /sbin/shutdown -h now
