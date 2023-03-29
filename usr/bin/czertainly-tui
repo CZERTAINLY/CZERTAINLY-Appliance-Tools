@@ -839,6 +839,7 @@ docker() {
 	   "server:"               1 13 "$server"   1 21 $maxInputLen $maxLen \
 	   "username:"             2 11 "$username" 2 21 $maxInputLen $maxLen \
 	   "password:"             3 11 "$password" 3 21 $maxInputLen $maxLen \
+	   "email:"                4 11 "$email"    4 21 $maxInputLen $maxLen \
 	   2>$tmpF
     # get dialog's exit status
     return_value=$?
@@ -853,19 +854,21 @@ docker() {
 	read -r _server
 	read -r _username
 	read -r _password
+	read -r _email
 
 	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
 
 	logger "$p: username  '$username' => '$_username'"
 	logger "$p: password  '$password' => '$_password'"
 	logger "$p: server    '$server' => '$_server'"
+	logger "$p: email     '$email' => '$_email'"
 
 	newSettings=`mktemp /tmp/czertainly-manager.docker.XXXXXX`
 
 	echo "---
 docker:
   server: $_server
-  email: $email
+  email: $_email
   secret: $secret
   username: $_username
   password: $_password" >> $newSettings
