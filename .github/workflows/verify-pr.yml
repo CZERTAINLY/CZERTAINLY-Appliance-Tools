@@ -15,5 +15,8 @@ jobs:
       - name: Show git status
         run: git status
 
+      - name: Show git urls
+        run: git config --get remote.origin.url ; git submodule foreach -q 'echo $(git config --get remote.origin.url)'
+
       - name: Verify submodules
         run: ./check-submodules
