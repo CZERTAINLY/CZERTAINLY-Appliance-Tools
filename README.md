@@ -32,6 +32,12 @@ git submodule foreach 'git fetch origin; \
   git clean -dfx'
 ```
 
+### Change to your fork of submodule repository:
+```
+git submodule set-url -- etc/czertainly-ansible/roles/rke2 git@github.com:semik/ansible-role-rke2.git
+```
+
+
 ## Building package
 
 ```
