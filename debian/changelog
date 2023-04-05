@@ -1,4 +1,4 @@
-czertainly-appliance-tools (2.7.0~rc1) stable; urgency=medium
+czertainly-appliance-tools (2.7.0~rc2) stable; urgency=medium
 
   * updates for CZERTIANLY 2.7.0
   * updated ansible-role-czertainly
