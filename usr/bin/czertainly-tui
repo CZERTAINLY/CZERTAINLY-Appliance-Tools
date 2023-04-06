@@ -494,7 +494,7 @@ czertainlyConfig() {
     networkDiscoveryProvider=$(tf2x $(grep < $settings '^ *networkDiscoveryProvider: ' | sed "s/^ *networkDiscoveryProvider: *//"))
     keystoreEntityProvider=$(tf2x $(grep < $settings '^ *keystoreEntityProvider: ' | sed "s/^ *keystoreEntityProvider: *//"))
     softwareCryptographyProvider=$(tf2x $(grep < $settings '^ *softwareCryptographyProvider: ' | sed "s/^ *softwareCryptographyProvider: *//"))
-    keyCloak=$(tf2x $(grep < $settings '^ *keyCloak: ' | sed "s/^ *keyCloak: *//"))
+    keycloak=$(tf2x $(grep < $settings '^ *keycloak: ' | sed "s/^ *keycloak: *//"))
     utilsService=$(tf2x $(grep < $settings '^ *utilsService: ' | sed "s/^ *utilsService: *//"))
 
 
@@ -509,7 +509,7 @@ czertainlyConfig() {
 	   "Network Discovery Provider:"     7 1 "$networkDiscoveryProvider"     7 33 2            1 \
 	   "Keystore Entity Provider:"       8 1 "$keystoreEntityProvider"       8 33 2            1 \
 	   "Software Cryptography Provider:" 9 1 "$softwareCryptographyProvider" 9 33 2            1 \
-	   "KeyCloak IdP:"                  10 1 "$keyCloak"                    10 33 2            1 \
+	   "Keycloak IdP:"                  10 1 "$keycloak"                    10 33 2            1 \
 	   "Utils Service:"                 11 1 "$utilsService"                11 33 2            1 \
 	   2>$tmpF
     # get dialog's exit status
@@ -531,7 +531,7 @@ czertainlyConfig() {
 	read -r _networkDiscoveryProvider
 	read -r _keystoreEntityProvider
 	read -r _softwareCryptographyProvider
-	read -r _keyCloak
+	read -r _keycloak
 	read -r _utilsService
 
 	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
@@ -545,7 +545,7 @@ czertainlyConfig() {
 	logger "$p: networkDiscoveryProvider     '$networkDiscoveryProvider'     => '$_networkDiscoveryProvider'"
 	logger "$p: keystoreEntityProvider       '$keystoreEntityProvider'       => '$_keystoreEntityProvider'"
 	logger "$p: softwareCryptographyProvider '$softwareCryptographyProvider' => '$_softwareCryptographyProvider'"
-	logger "$p: keyCloak                     '$keyCloak'                     => '$_keyCloak'"
+	logger "$p: keycloak                     '$keycloak'                     => '$_keycloak'"
 	logger "$p: utilsService                 '$utilsService'                 => '$_utilsService'"
 
 	newSettings=`mktemp /tmp/czertainly-manager.czertainly.XXXXXX`
@@ -558,7 +558,7 @@ czertainlyConfig() {
 	_networkDiscoveryProvider=$(x2tf     "$_networkDiscoveryProvider")
 	_keystoreEntityProvider=$(x2tf       "$_keystoreEntityProvider")
 	_softwareCryptographyProvider=$(x2tf "$_softwareCryptographyProvider")
-	_keyCloak=$(x2tf                     "$_keyCloak")
+	_keycloak=$(x2tf                     "$_keycloak")
 	_utilsService=$(x2tf                 "$_utilsService")
 
 	echo "---
@@ -572,7 +572,7 @@ czertainly:
   networkDiscoveryProvider: $_networkDiscoveryProvider
   keystoreEntityProvider: $_keystoreEntityProvider
   softwareCryptographyProvider: $_softwareCryptographyProvider
-  keyCloak: $_keyCloak
+  keycloak: $_keycloak
   utilsService: $_utilsService
 " > $newSettings
 

@@ -1,5 +1,5 @@
-czertainly-appliance-tools (2.7.0~rc3) stable; urgency=medium
-  * added KeyCloak
+czertainly-appliance-tools (2.7.0~rc4) stable; urgency=medium
+  * added Keycloak
   * added utilsService
 
  -- Jan Tomášek <jan.tomasek@3key.company>  Thu,  6 Apr 2023 10:05:00 +0100
