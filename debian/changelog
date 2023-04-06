@@ -1,5 +1,10 @@
-czertainly-appliance-tools (2.7.0~rc2) stable; urgency=medium
+czertainly-appliance-tools (2.7.0~rc3) stable; urgency=medium
+  * added KeyCloak
+  * added utilsService
 
+ -- Jan Tomášek <jan.tomasek@3key.company>  Thu,  6 Apr 2023 10:05:00 +0100
+
+czertainly-appliance-tools (2.7.0~rc2) stable; urgency=medium
   * updates for CZERTIANLY 2.7.0
   * updated ansible-role-czertainly
   * updated ansible-role-rke2

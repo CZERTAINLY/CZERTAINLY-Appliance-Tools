@@ -4,6 +4,22 @@
   connection: local
 
   pre_tasks:
+    - name: check if keycloak file exists
+      ansible.builtin.stat:
+        path: "/etc/czertainly-ansible/vars/keycloak.yml"
+      register: keycloak_result
+      tags: always
+    - name: generate secret for keycloak
+      ansible.builtin.set_fact:
+        key_cloak_secret: "{{ lookup('ansible.builtin.password', '/dev/null') }}"
+      when: not keycloak_result.stat.exists
+      tags: always
+    - name: write secret for keycloak
+      ansible.builtin.template:
+        src: "keycloak.yml.j2"
+        dest: "/etc/czertainly-ansible/vars/keycloak.yml"
+      when: not keycloak_result.stat.exists
+      tags: always
     - name: "read database.yml"
       include_vars: /etc/czertainly-ansible/vars/database.yml
       tags: always
@@ -21,6 +37,9 @@
       tags: always
     - name: "read czertainly.yml"
       include_vars: /etc/czertainly-ansible/vars/czertainly.yml
+      tags: always
+    - name: "read keycloak.yml"
+      include_vars: /etc/czertainly-ansible/vars/keycloak.yml
       tags: always
 
   vars:

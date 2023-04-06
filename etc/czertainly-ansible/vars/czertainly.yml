@@ -9,3 +9,5 @@ czertainly:
   networkDiscoveryProvider: true
   keystoreEntityProvider: true
   softwareCryptographyProvider: true
+  keyCloak: true
+  utilsService: true
