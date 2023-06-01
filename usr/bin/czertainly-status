@@ -1,6 +1,6 @@
 #!/bin/bash
 
-declare -a NS=( 'kube-system' 'ingress-nginx' 'cert-manager' 'czertainly' )
+declare -a NS=( 'kube-system' 'cert-manager' 'czertainly' )
 
 kubectl='/var/lib/rancher/rke2/bin/kubectl'
 

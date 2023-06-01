@@ -36,6 +36,7 @@ git submodule foreach 'git fetch origin; \
 ```
 git submodule set-url -- etc/czertainly-ansible/roles/rke2 git@github.com:semik/ansible-role-rke2.git
 ```
+Type exactly `etc/czertainly-ansible/roles/rke2`, not `etc/czertainly-ansible/roles/rke2/` &#128540;
 
 
 ## Building package
