@@ -480,7 +480,7 @@ x2tf() {
 }
 
 czertainlyConfig() {
-    maxLen=10
+    maxLen=20
     maxInputLen=$[$eCOLS-20]
     local p=$FUNCNAME
     settings=$czertainlySettings
@@ -499,7 +499,7 @@ czertainlyConfig() {
 
 
     dialog --backtitle "$backTitleCentered" --title " CZERTAINLY configuration " \
-	   --form "Parameters of CZERTAINLY instalation" 15 $eCOLS 9 \
+	   --form "Parameters of CZERTAINLY instalation" 17 $eCOLS 11 \
 	   "CZERTAINLY version:"             1 1 "$version"                      1 21 $maxInputLen $maxLen \
 	   "Common Credential Provider:"     2 1 "$commonCredentialProvider"     2 33 2            1 \
 	   "EJBCA NG Connector:"             3 1 "$ejbcaNgConnector"             3 33 2            1 \
