@@ -1,6 +1,10 @@
+czertainly-appliance-tools (2.7.1~rc6) stable; urgency=medium
+
+  * adjust CZERTAINLY config window size
+
+ -- Jan Tomášek <jan.tomasek@3key.company>  Thu,  1 Jun 2023 16:13:00 +0200
+
 czertainly-appliance-tools (2.7.1~rc5) stable; urgency=medium
-  * added Keycloak
-  * added utilsService
   * raise version to 2.7.1~rc5
 
  -- Jan Tomášek <jan.tomasek@3key.company>  Tue, 30 May 2023 11:41:00 +0100
