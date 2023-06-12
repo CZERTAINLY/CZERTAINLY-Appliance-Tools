@@ -45,7 +45,7 @@ debsums: changed file /usr/bin/czertainly-tui (from czertainly-appliance-tools p
 debsums: changed file /etc/czertainly-ansible/roles/czertainly/tasks/main.yml (from czertainly-appliance-tools package)
 ```
 
-`/etc/czertainly-ansible/vars` is excluded because it is modified by user of the appliance.
+The directory `/etc/czertainly-ansible/vars` is excluded because it is modified by user of the appliance.
 
 
 ## Building package
