@@ -1,3 +1,10 @@
+czertainly-appliance-tools (2.7.1~rc9) stable; urgency=medium
+
+  * raise version to 2.7.1~rc9
+  * implemented install only CZERTAINLY
+
+ -- Jan Tomášek <jan.tomasek@3key.company>  Thu, 13 Jun 2023 15:42:00 +0200
+
 czertainly-appliance-tools (2.7.1~rc8) stable; urgency=medium
 
   * raise version to 2.7.1~rc8
