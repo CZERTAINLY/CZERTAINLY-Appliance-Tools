@@ -1,7 +1,7 @@
 ---
 on:
   push:
-    branches: [main, develop, installC]
+    branches: [main, develop]
 
 jobs:
   build:
