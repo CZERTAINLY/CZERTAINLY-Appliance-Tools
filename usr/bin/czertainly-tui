@@ -47,9 +47,9 @@ advancedMenu=(
 #    'installHelm'        'Install only helm utility'
 #    'installRKE2'        "Install only RKE2 - Rancher\'s next-generation Kubernetes distribution"
 #    'verifyRKE2'         'Verify kubernetes',
-#    'installC'           'Install only CZERTAINLY'
     'update'             'Update Operating System'
     'removeC'            'Remove CZERTAINLY'
+    'installC'           'Install only CZERTAINLY'
     'remove'             'Remove RKE2 & CZERTAINLY'
     'shell'              'Enter system shell'
     'reboot'             'Reboot system'
@@ -269,6 +269,12 @@ advanced() {
 	    else
 		logger "$p: complete remove canceled"
 	    fi
+	    ;;
+	'installC')
+	    logger "$p: installing CZERTAINLY only"
+	    execAnsible \
+		    "sudo /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --tags czertainly"
+	    logger "$p: installing CZERTAINLY only"
 	    ;;
 	'shell')
 	    clear -x
