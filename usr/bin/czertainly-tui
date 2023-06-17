@@ -333,14 +333,14 @@ network() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _httpProxy
 	read -r _httpsProxy
 	read -r _ftpProxy
 	read -r _ftpsProxy
 	read -r _noProxy
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: httpProxy  '$httpProxy' => '$_httpProxy'"
 	logger "$p: httpsProxy '$httpsProxy' => '$_httpsProxy'"
@@ -415,12 +415,12 @@ database() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _username
 	read -r _password
 	read -r _database
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: username  '$username' => '$_username'"
 	logger "$p: password  '$password' => '$_password'"
@@ -527,7 +527,7 @@ czertainlyConfig() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _version
 	read -r _commonCredentialProvider
 	read -r _ejbcaNgConnector
@@ -540,7 +540,7 @@ czertainlyConfig() {
 	read -r _keycloak
 	read -r _utilsService
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: version                      '$version'                      => '$_version'"
 	logger "$p: commonCredentialProvider     '$commonCredentialProvider'     => '$_commonCredentialProvider'"
@@ -663,11 +663,11 @@ ingressTLS() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _certificate
 	read -r _private_key
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: certificate  '$certificate' => '$_certificate'"
 	logger "$p: private_key  '$private_key' => '$_private_key'"
@@ -754,10 +754,10 @@ trustedCA() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _trustedCA
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: trustedCA '$trustedCA' => '$_trustedCA'"
 
@@ -812,10 +812,10 @@ changeHostname() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _hostname
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: hostname '$hostname' => '$_hostname'"
 
@@ -868,13 +868,13 @@ docker() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _server
 	read -r _username
 	read -r _password
 	read -r _email
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: username  '$username' => '$_username'"
 	logger "$p: password  '$password' => '$_password'"
