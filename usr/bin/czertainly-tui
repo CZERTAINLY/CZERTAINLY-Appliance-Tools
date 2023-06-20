@@ -47,9 +47,9 @@ advancedMenu=(
 #    'installHelm'        'Install only helm utility'
 #    'installRKE2'        "Install only RKE2 - Rancher\'s next-generation Kubernetes distribution"
 #    'verifyRKE2'         'Verify kubernetes',
-#    'installC'           'Install only CZERTAINLY'
     'update'             'Update Operating System'
     'removeC'            'Remove CZERTAINLY'
+    'installC'           'Install only CZERTAINLY'
     'remove'             'Remove RKE2 & CZERTAINLY'
     'shell'              'Enter system shell'
     'reboot'             'Reboot system'
@@ -270,6 +270,12 @@ advanced() {
 		logger "$p: complete remove canceled"
 	    fi
 	    ;;
+	'installC')
+	    logger "$p: installing CZERTAINLY only"
+	    execAnsible \
+		    "sudo /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --tags czertainly"
+	    logger "$p: installing CZERTAINLY only"
+	    ;;
 	'shell')
 	    clear -x
 	    echo "to exit from shell and return into menu type 'exit'"
@@ -327,14 +333,14 @@ network() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _httpProxy
 	read -r _httpsProxy
 	read -r _ftpProxy
 	read -r _ftpsProxy
 	read -r _noProxy
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: httpProxy  '$httpProxy' => '$_httpProxy'"
 	logger "$p: httpsProxy '$httpsProxy' => '$_httpsProxy'"
@@ -409,12 +415,12 @@ database() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _username
 	read -r _password
 	read -r _database
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: username  '$username' => '$_username'"
 	logger "$p: password  '$password' => '$_password'"
@@ -480,7 +486,7 @@ x2tf() {
 }
 
 czertainlyConfig() {
-    maxLen=10
+    maxLen=20
     maxInputLen=$[$eCOLS-20]
     local p=$FUNCNAME
     settings=$czertainlySettings
@@ -494,10 +500,12 @@ czertainlyConfig() {
     networkDiscoveryProvider=$(tf2x $(grep < $settings '^ *networkDiscoveryProvider: ' | sed "s/^ *networkDiscoveryProvider: *//"))
     keystoreEntityProvider=$(tf2x $(grep < $settings '^ *keystoreEntityProvider: ' | sed "s/^ *keystoreEntityProvider: *//"))
     softwareCryptographyProvider=$(tf2x $(grep < $settings '^ *softwareCryptographyProvider: ' | sed "s/^ *softwareCryptographyProvider: *//"))
+    keycloak=$(tf2x $(grep < $settings '^ *keycloak: ' | sed "s/^ *keycloak: *//"))
+    utilsService=$(tf2x $(grep < $settings '^ *utilsService: ' | sed "s/^ *utilsService: *//"))
 
 
     dialog --backtitle "$backTitleCentered" --title " CZERTAINLY configuration " \
-	   --form "Parameters of CZERTAINLY instalation" 15 $eCOLS 9 \
+	   --form "Parameters of CZERTAINLY instalation" 17 $eCOLS 11 \
 	   "CZERTAINLY version:"             1 1 "$version"                      1 21 $maxInputLen $maxLen \
 	   "Common Credential Provider:"     2 1 "$commonCredentialProvider"     2 33 2            1 \
 	   "EJBCA NG Connector:"             3 1 "$ejbcaNgConnector"             3 33 2            1 \
@@ -507,6 +515,8 @@ czertainlyConfig() {
 	   "Network Discovery Provider:"     7 1 "$networkDiscoveryProvider"     7 33 2            1 \
 	   "Keystore Entity Provider:"       8 1 "$keystoreEntityProvider"       8 33 2            1 \
 	   "Software Cryptography Provider:" 9 1 "$softwareCryptographyProvider" 9 33 2            1 \
+	   "Keycloak IdP:"                  10 1 "$keycloak"                    10 33 2            1 \
+	   "Utils Service:"                 11 1 "$utilsService"                11 33 2            1 \
 	   2>$tmpF
     # get dialog's exit status
     return_value=$?
@@ -517,7 +527,7 @@ czertainlyConfig() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _version
 	read -r _commonCredentialProvider
 	read -r _ejbcaNgConnector
@@ -527,8 +537,10 @@ czertainlyConfig() {
 	read -r _networkDiscoveryProvider
 	read -r _keystoreEntityProvider
 	read -r _softwareCryptographyProvider
+	read -r _keycloak
+	read -r _utilsService
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: version                      '$version'                      => '$_version'"
 	logger "$p: commonCredentialProvider     '$commonCredentialProvider'     => '$_commonCredentialProvider'"
@@ -539,6 +551,8 @@ czertainlyConfig() {
 	logger "$p: networkDiscoveryProvider     '$networkDiscoveryProvider'     => '$_networkDiscoveryProvider'"
 	logger "$p: keystoreEntityProvider       '$keystoreEntityProvider'       => '$_keystoreEntityProvider'"
 	logger "$p: softwareCryptographyProvider '$softwareCryptographyProvider' => '$_softwareCryptographyProvider'"
+	logger "$p: keycloak                     '$keycloak'                     => '$_keycloak'"
+	logger "$p: utilsService                 '$utilsService'                 => '$_utilsService'"
 
 	newSettings=`mktemp /tmp/czertainly-manager.czertainly.XXXXXX`
 
@@ -550,6 +564,8 @@ czertainlyConfig() {
 	_networkDiscoveryProvider=$(x2tf     "$_networkDiscoveryProvider")
 	_keystoreEntityProvider=$(x2tf       "$_keystoreEntityProvider")
 	_softwareCryptographyProvider=$(x2tf "$_softwareCryptographyProvider")
+	_keycloak=$(x2tf                     "$_keycloak")
+	_utilsService=$(x2tf                 "$_utilsService")
 
 	echo "---
 czertainly:
@@ -562,6 +578,8 @@ czertainly:
   networkDiscoveryProvider: $_networkDiscoveryProvider
   keystoreEntityProvider: $_keystoreEntityProvider
   softwareCryptographyProvider: $_softwareCryptographyProvider
+  keycloak: $_keycloak
+  utilsService: $_utilsService
 " > $newSettings
 
 	if `diff $newSettings $settings >/dev/null 2>&1`
@@ -645,11 +663,11 @@ ingressTLS() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _certificate
 	read -r _private_key
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: certificate  '$certificate' => '$_certificate'"
 	logger "$p: private_key  '$private_key' => '$_private_key'"
@@ -736,10 +754,10 @@ trustedCA() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _trustedCA
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: trustedCA '$trustedCA' => '$_trustedCA'"
 
@@ -794,10 +812,10 @@ changeHostname() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _hostname
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: hostname '$hostname' => '$_hostname'"
 
@@ -850,13 +868,13 @@ docker() {
 	return 1
     fi
 
-    cat $tmpF | sed "s/ //gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
 	read -r _server
 	read -r _username
 	read -r _password
 	read -r _email
 
-	lines=`cat $tmpF | sed "s/ //gm" | grep -v '^$' | wc -l`
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
 	logger "$p: username  '$username' => '$_username'"
 	logger "$p: password  '$password' => '$_password'"

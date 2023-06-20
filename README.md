@@ -6,7 +6,7 @@ Debian package with czertainly appliance tools.
 Is created as [git submodule](https://www.vogella.com/tutorials/GitSubmodules/article.html).
 
 ### First time initialization
-```
+```sh
 cd CZERTAINLY-Appliance-Tools
 git submodule add -b develop https://github.com/3KeyCompany/ansible-role-czertainly-branding.git etc/czertainly-ansible/roles/branding
 git submodule add -b develop https://github.com/3KeyCompany/ansible-role-http-proxy.git etc/czertainly-ansible/roles/http-proxy
@@ -17,13 +17,13 @@ git submodule add -b develop https://github.com/3KeyCompany/ansible-role-czertai
 ```
 
 ### Update after checkout
-```
+```sh
 cd CZERTAINLY-Appliance-Tools
 git submodule update --init --recursive
 ```
 
 ### Update after changes in submodules
-```
+```sh
 cd CZERTAINLY-Appliance-Tools
 git submodule foreach 'git fetch origin; \
   git checkout $(git rev-parse --abbrev-ref HEAD); \
@@ -33,14 +33,24 @@ git submodule foreach 'git fetch origin; \
 ```
 
 ### Change to your fork of submodule repository:
-```
+```sh
 git submodule set-url -- etc/czertainly-ansible/roles/rke2 git@github.com:semik/ansible-role-rke2.git
 ```
+Type exactly `etc/czertainly-ansible/roles/rke2`, not `etc/czertainly-ansible/roles/rke2/` &#128540;
+
+### Check which files in `/etc/czertainly-ansible/` have changed:
+```sh
+$ debsums -as czertainly-appliance-tools 2>&1 |grep -v '\/etc\/czertainly-ansible\/vars'
+debsums: changed file /usr/bin/czertainly-tui (from czertainly-appliance-tools package)
+debsums: changed file /etc/czertainly-ansible/roles/czertainly/tasks/main.yml (from czertainly-appliance-tools package)
+```
+
+The directory `/etc/czertainly-ansible/vars` is excluded because it is modified by user of the appliance.
 
 
 ## Building package
 
-```
+```sh
 ./build-deb.sh
 ```
 
