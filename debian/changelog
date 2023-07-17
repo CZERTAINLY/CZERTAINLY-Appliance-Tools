@@ -64,13 +64,13 @@ czertainly-appliance-tools (2.7.0~rc2) stable; urgency=medium
   * updated ansible-role-rke2
 
  -- Jan Tomášek <jan.tomasek@3key.company>  Tue,  4 Apr 2023 15:26:00 +0100
- 
+
 czertainly-appliance-tools (2.6.0) stable; urgency=medium
 
   * fix version
 
  -- Jan Tomášek <jan.tomasek@3key.company>  Tue, 20 Jun 2023 09:37:00 +0200
- 
+
 czertainly-appliance-tools (2.6.0~rc12) stable; urgency=medium
 
   * add dependency on bash-completion
