@@ -382,6 +382,9 @@ proxy:" > $newSettings
 		    "sudo /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --tags http_proxy" \
 		    "http_proxy"
 		logger "$p: ansible finished"
+		dialog --backtitle "$backTitleCentered" --title "Warning" --msgbox "If you are changing HTTP Proxy parameters before the first CZERTAINLY installation, you have to close this terminal session and re-login back to make changes effective.
+
+If you are updating the existing installation, you have first reboot the appliance and then re-run the installation process to get the setting correctly propagated." 13 50
 	    fi
 	else
 	    logger "$p: all parameters are empty - zeroizing $settings"
