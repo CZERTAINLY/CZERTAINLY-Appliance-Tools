@@ -402,12 +402,16 @@ database() {
     username=`grep < $settings '^ *username: ' | sed "s/^ *username: *//"`
     password=`grep < $settings '^ *password: ' | sed "s/^ *password: *//"`
     database=`grep < $settings '^ *database: ' | sed "s/^ *database: *//"`
+    repository=`grep < $settings '^ *repository: ' | sed "s/^ *repository: *//"`
+    version=`grep < $settings '^ *version: ' | sed "s/^ *version: *//"`
 
     dialog --backtitle "$backTitleCentered" --title " local PostgreSQL " \
-	   --form "Parameters of PostgreSQL running on appliance" 10 $eCOLS 3 \
-	   "username:"  1 1 "$username" 1 14 $maxInputLen $maxLen \
-	   "password:"  2 1 "$password" 2 14 $maxInputLen $maxLen \
-	   "database:"  3 1 "$database" 3 14 $maxInputLen $maxLen \
+	   --form "Parameters of PostgreSQL running on appliance" 13 $eCOLS 5 \
+	   "username:"   1 1 "$username"   1 14 $maxInputLen $maxLen \
+	   "password:"   2 1 "$password"   2 14 $maxInputLen $maxLen \
+	   "database:"   3 1 "$database"   3 14 $maxInputLen $maxLen \
+	   "repository:" 4 1 "$repository" 4 14 $maxInputLen $maxLen \
+	   "version:"    5 1 "$version"    5 14 $maxInputLen $maxLen \
 	   2>$tmpF
     # get dialog's exit status
     return_value=$?
@@ -422,22 +426,28 @@ database() {
 	read -r _username
 	read -r _password
 	read -r _database
+	read -r _repository
+	read -r _version
 
 	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
-	logger "$p: username  '$username' => '$_username'"
-	logger "$p: password  '$password' => '$_password'"
-	logger "$p: database  '$database' => '$_database'"
+	logger "$p: username   '$username'   => '$_username'"
+	logger "$p: password   '$password'   => '$_password'"
+	logger "$p: database   '$database'   => '$_database'"
+	logger "$p: repository '$repository' => '$_repository'"
+	logger "$p: version    '$version'    => '$_version'"
 
 	newSettings=`mktemp /tmp/czertainly-manager.database.XXXXXX`
 
-	if [ $lines -eq 3 ]
+	if [ $lines -eq 5 ]
 	then
 	    echo "---
 postgres:" > $newSettings
-	    [ "$_username" != '' ] && echo "  username: $_username" >> $newSettings
-	    [ "$_password" != '' ] && echo "  password: $_password" >> $newSettings
-	    [ "$_database" != '' ] && echo "  database: $_database" >> $newSettings
+	    [ "$_username"   != '' ] && echo "  username:   $_username"   >> $newSettings
+	    [ "$_password"   != '' ] && echo "  password:   $_password"   >> $newSettings
+	    [ "$_database"   != '' ] && echo "  database:   $_database"   >> $newSettings
+	    [ "$_repository" != '' ] && echo "  repository: $_repository" >> $newSettings
+	    [ "$_version"    != '' ] && echo "  version:    $_version"    >> $newSettings
 
 	    if `diff $newSettings $settings >/dev/null 2>&1`
 	    then
