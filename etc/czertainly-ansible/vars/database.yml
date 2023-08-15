@@ -8,4 +8,5 @@ postgres:
   username: czertainlyuser
   password: your-strong-password
   database: czertainlydb
+  repository: debian
 
