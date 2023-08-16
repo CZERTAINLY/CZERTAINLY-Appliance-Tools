@@ -928,7 +928,7 @@ execAnsible() {
     echo ""
     if [ "x$mode" == 'xfull-install' ]
     then
-	echo "First installation takes about 10minutes, please be patient."
+	echo "First installation takes about 15 minutes, please be patient."
     fi
 
     $cmd
@@ -1015,7 +1015,7 @@ main() {
 	    czertainlyConfig
 	    ;;
 	'install')
-	    if confirm "Have you set up access credentials to harbor.3key.company and possibly adjusted other options? Please confirm installation by selecting Yes button. Complete installation takes about 10 minutes."
+	    if confirm "Have you set up access credentials to harbor.3key.company and possibly adjusted other options? Please confirm installation by selecting Yes button. Complete installation takes about 15 minutes."
 	    then
 		logger "$p: install confirmed"
 		execAnsible \
