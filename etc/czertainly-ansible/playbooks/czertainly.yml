@@ -54,6 +54,11 @@
       FTP_PROXY: "{{ proxy.ftp | default('') }}"
       FTPS_PROXY: "{{ proxy.ftps | default('') }}"
       NO_PROXY: "{{ proxy.dont_use_for | default('') | join(',') }}"
+    # by default rke2 role only install kube cfg for root
+    custom_kube_cfg_dir:
+      - owner: "czertainly"
+        group: "czertainly"
+        dir: "/home/czertainly/.kube"
 
   # Now we filterout those dict keys which have environment valuables
   # which have value equal to ''. This and previous block is need to
