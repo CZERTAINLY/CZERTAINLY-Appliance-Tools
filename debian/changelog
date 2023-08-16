@@ -1,6 +1,6 @@
-czertainly-appliance-tools (2.8.1rc1) stable; urgency=medium
+czertainly-appliance-tools (2.8.1rc2) stable; urgency=medium
 
-  * prepare 2.8.1
+  * prepare 2.9.0
   * add support for offical PostgreSQL repository
   * verify harbor credentials before installing
   * install local-path-provisioner

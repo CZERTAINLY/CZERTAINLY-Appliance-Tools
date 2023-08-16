@@ -4,21 +4,21 @@
 	branch = develop
 [submodule "etc/czertainly-ansible/roles/http-proxy"]
 	path = etc/czertainly-ansible/roles/http-proxy
-	url = https://github.com/3KeyCompany/ansible-role-http-proxy.git
-	branch = develop
+	url = git@github.com:semik/ansible-role-http-proxy.git
+	branch = work
 [submodule "etc/czertainly-ansible/roles/postgres"]
 	path = etc/czertainly-ansible/roles/postgres
-	url = https://github.com/3KeyCompany/ansible-role-postgres.git
+	url = git@github.com:semik/ansible-role-postgres.git
 	branch = develop
 [submodule "etc/czertainly-ansible/roles/helm"]
 	path = etc/czertainly-ansible/roles/helm
-	url = https://github.com/3KeyCompany/ansible-role-helm.git
+	url = git@github.com:semik/ansible-role-helm.git
 	branch = develop
 [submodule "etc/czertainly-ansible/roles/czertainly"]
 	path = etc/czertainly-ansible/roles/czertainly
-	url = https://github.com/3KeyCompany/ansible-role-czertainly.git
+	url = git@github.com:semik/ansible-role-czertainly.git
 	branch = develop
 [submodule "etc/czertainly-ansible/roles/rke2"]
 	path = etc/czertainly-ansible/roles/rke2
-	url = https://github.com/3KeyCompany/ansible-role-rke2.git
-	branch = develop
+	url = git@github.com:semik/ansible-role-rke2.git
+	branch = 2.8.1
