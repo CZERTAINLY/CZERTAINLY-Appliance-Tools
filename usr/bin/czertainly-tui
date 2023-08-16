@@ -211,8 +211,19 @@ removeCZERTAINLY() {
 update() {
     clear -x
     echo ""
+    old_sum=`sha1sum $0 | sed "s/ .*$//"`
     sudo /usr/bin/apt update && sudo /usr/bin/apt upgrade
+    new_sum=`sha1sum $0 | sed "s/ .*$//"`
     echo ""
+    if [ "$new_sum" = "$old_sum" ]
+    then
+        logger "$p: upgrade finished and TUI was not changed"
+    else
+        logger "$p: upgrade finished and TUI WAS CHANGED"
+	echo "CZERTAINLY TUI was upgraded during system upgrade. It is recomended
+to close this session and re-loging back into appliance.
+"
+    fi
     echo "press enter to return into menu"
     read
 }
