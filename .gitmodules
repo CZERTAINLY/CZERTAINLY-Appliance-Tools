@@ -4,7 +4,7 @@
 	branch = develop
 [submodule "etc/czertainly-ansible/roles/http-proxy"]
 	path = etc/czertainly-ansible/roles/http-proxy
-	url = git@github.com:semik/ansible-role-http-proxy.git
+	url = https://github.com/3KeyCompany/ansible-role-http-proxy.git
 	branch = work
 [submodule "etc/czertainly-ansible/roles/postgres"]
 	path = etc/czertainly-ansible/roles/postgres
