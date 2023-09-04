@@ -4,6 +4,7 @@ czertainly-appliance-tools (2.9.0rc1) stable; urgency=medium
   * add support for offical PostgreSQL repository
   * verify harbor credentials before installing
   * install local-path-provisioner
+  * upgrade cert-manager to 1.12.0
 
  -- Jan Tomášek <jan.tomasek@3key.company>  Mon, 17 Jul 2023 15:14:00 +0200
 
