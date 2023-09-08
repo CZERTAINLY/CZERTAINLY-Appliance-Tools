@@ -17,7 +17,7 @@
 [submodule "etc/czertainly-ansible/roles/czertainly"]
 	path = etc/czertainly-ansible/roles/czertainly
 	url = https://github.com/3KeyCompany/ansible-role-czertainly.git
-	branch = develop
+	branch = mail
 [submodule "etc/czertainly-ansible/roles/rke2"]
 	path = etc/czertainly-ansible/roles/rke2
 	url = https://github.com/3KeyCompany/ansible-role-rke2.git
