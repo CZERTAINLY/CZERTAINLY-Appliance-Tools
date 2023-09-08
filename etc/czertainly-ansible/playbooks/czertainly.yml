@@ -41,6 +41,9 @@
     - name: "read keycloak.yml"
       include_vars: /etc/czertainly-ansible/vars/keycloak.yml
       tags: always
+    - name: "read email.yml"
+      include_vars: /etc/czertainly-ansible/vars/email.yml
+      tags: always
 
   vars:
     # Here we are preparing dict with environment which is based on

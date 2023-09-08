@@ -11,3 +11,4 @@ czertainly:
   softwareCryptographyProvider: true
   keycloak: true
   utilsService: true
+  emailProvider: true

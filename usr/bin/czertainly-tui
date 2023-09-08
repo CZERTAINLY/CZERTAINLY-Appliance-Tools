@@ -34,6 +34,7 @@ mainMenu=(
     'trustedCA'    "Configure custom trusted certificates"
     'postgres'     "Configure database"
     'dockerRepo'   "Configure Docker repository access credentials"
+    'mail'         "Configure email server used for notifications"
     'czertainly'   "Configure CZERTAINLY"
     'install'      "Install CZERTAINLY"
     'status'       "Show CZERTAINLY status"
@@ -62,6 +63,7 @@ czertainlySettings='/etc/czertainly-ansible/vars/czertainly.yml'
 databaseSettings='/etc/czertainly-ansible/vars/database.yml'
 ingressSettings='/etc/czertainly-ansible/vars/ingress.yml'
 trustedCASettings='/etc/czertainly-ansible/vars/trustedCA.yml'
+emailSettings='/etc/czertainly-ansible/vars/email.yml'
 rkeUninstall='/usr/local/bin/rke2-uninstall.sh'
 kubectl='/var/lib/rancher/rke2/bin/kubectl'
 
@@ -450,7 +452,10 @@ database() {
 
 	newSettings=`mktemp /tmp/czertainly-manager.database.XXXXXX`
 
-	if [ $lines -eq 5 ]
+	# Permit version to be empty. This is usefull when using PostgreSQL from debian,
+	# which is the default. On Debian there is only one version of database available
+	# so explicit settings make no sense.
+	if [ $lines -eq 5 ] || ( [ $lines -eq 4 ] && [ $_version == ''] )
 	then
 	    echo "---
 postgres:" > $newSettings
@@ -509,6 +514,73 @@ x2tf() {
 
 }
 
+emailConfig() {
+    maxLen=20
+    maxInputLen=$[$eCOLS-20]
+    local p=$FUNCNAME
+    settings=$emailSettings
+
+    smtp_host=`grep < $settings '^ *smtp_host: ' | sed "s/^ *smtp_host: *//"`
+    smtp_port=`grep < $settings '^ *smtp_port: ' | sed "s/^ *smtp_port: *//"`
+    smtp_tls=$(tf2x $(grep < $settings '^ *smtp_tls: ' | sed "s/^ *smtp_tls: *//"))
+    smtp_username=`grep < $settings '^ *smtp_username: ' | sed "s/^ *smtp_username: *//"`
+    smtp_password=`grep < $settings '^ *smtp_password: ' | sed "s/^ *smtp_password: *//"`
+
+    dialog --backtitle "$backTitleCentered" --title " SMTP configuration " \
+	   --form "Parameters of email server used for notifications" 17 $eCOLS 6 \
+	   "Hostname:"           1 1 "$smtp_host"      1 15 $maxInputLen $maxLen \
+	   "Port number:"        2 1 "$smtp_port"      2 15 $maxInputLen $maxLen \
+	   "Use TLS:"            3 1 "$smtp_tls"       3 15 2            1 \
+	   "Username:"           4 1 "$smtp_username"  4 15 $maxInputLen $maxLen \
+	   "Passsword:"          5 1 "$smtp_password"  5 15 $maxInputLen $maxLen \
+	   2>$tmpF
+    # get dialog's exit status
+    return_value=$?
+
+    if [ $return_value != $DIALOG_OK ]
+    then
+	logger "$p: dialog not OK => returing without any change"
+	return 1
+    fi
+
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
+	read -r _smtp_host
+	read -r _smtp_port
+	read -r _smtp_tls
+	read -r _smtp_username
+	read -r _smtp_password
+
+	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
+
+	logger "$p: smtp_host      '$smtp_host'     => '$_smtp_host'"
+	logger "$p: smtp_port      '$smtp_port'     => '$_smtp_port'"
+	logger "$p: smtp_tls       '$smtp_tls'      => '$_smtp_tls'"
+	logger "$p: smtp_username  '$smtp_username' => '$_smtp_username'"
+	logger "$p: smtp_password  '$smtp_password' => '$_smtp_password'"
+
+	newSettings=`mktemp /tmp/czertainly-manager.email.XXXXXX`
+
+	_smtp_tls=$(x2tf "$_smtp_tls")
+
+	echo "---" > $newSettings
+	[ "$_smtp_host" != '' ]     && echo "smtp_host: $_smtp_host" >> $newSettings
+	[ "$_smtp_port" != '' ]     && echo "smtp_port: $_smtp_port" >> $newSettings
+	[ "$_smtp_tls" != '' ]      && echo "smtp_tls: $_smtp_tls" >> $newSettings
+	[ "$_smtp_username" != '' ] && echo "smtp_username: $_smtp_username" >> $newSettings
+	[ "$_smtp_password" != '' ] && echo "smtp_password: $_smtp_password" >> $newSettings
+
+	if `diff $newSettings $settings >/dev/null 2>&1`
+	then
+	    logger "$p: nothing changed"
+	    rm $newSettings
+	else
+	    cp $newSettings $settings
+	    rm $newSettings
+	    logger "$p: settings changed $settings rewritten"
+	fi
+    }
+}
+
 czertainlyConfig() {
     maxLen=20
     maxInputLen=$[$eCOLS-20]
@@ -526,10 +598,10 @@ czertainlyConfig() {
     softwareCryptographyProvider=$(tf2x $(grep < $settings '^ *softwareCryptographyProvider: ' | sed "s/^ *softwareCryptographyProvider: *//"))
     keycloak=$(tf2x $(grep < $settings '^ *keycloak: ' | sed "s/^ *keycloak: *//"))
     utilsService=$(tf2x $(grep < $settings '^ *utilsService: ' | sed "s/^ *utilsService: *//"))
-
+	emailProvider=$(tf2x $(grep < $settings '^ *emailProvider: ' | sed "s/^ *emailProvider: *//"))
 
     dialog --backtitle "$backTitleCentered" --title " CZERTAINLY configuration " \
-	   --form "Parameters of CZERTAINLY instalation" 17 $eCOLS 11 \
+	   --form "Parameters of CZERTAINLY instalation" 17 $eCOLS 12 \
 	   "CZERTAINLY version:"             1 1 "$version"                      1 21 $maxInputLen $maxLen \
 	   "Common Credential Provider:"     2 1 "$commonCredentialProvider"     2 33 2            1 \
 	   "EJBCA NG Connector:"             3 1 "$ejbcaNgConnector"             3 33 2            1 \
@@ -541,6 +613,7 @@ czertainlyConfig() {
 	   "Software Cryptography Provider:" 9 1 "$softwareCryptographyProvider" 9 33 2            1 \
 	   "Keycloak IdP:"                  10 1 "$keycloak"                    10 33 2            1 \
 	   "Utils Service:"                 11 1 "$utilsService"                11 33 2            1 \
+	   "email Provider:"                12 1 "$emailProvider"               12 33 2            1 \
 	   2>$tmpF
     # get dialog's exit status
     return_value=$?
@@ -563,6 +636,7 @@ czertainlyConfig() {
 	read -r _softwareCryptographyProvider
 	read -r _keycloak
 	read -r _utilsService
+	read -r _emailProvider
 
 	lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
@@ -577,6 +651,7 @@ czertainlyConfig() {
 	logger "$p: softwareCryptographyProvider '$softwareCryptographyProvider' => '$_softwareCryptographyProvider'"
 	logger "$p: keycloak                     '$keycloak'                     => '$_keycloak'"
 	logger "$p: utilsService                 '$utilsService'                 => '$_utilsService'"
+	logger "$p: emailProvider                '$emailProvider'                => '$_emailProvider'"
 
 	newSettings=`mktemp /tmp/czertainly-manager.czertainly.XXXXXX`
 
@@ -590,6 +665,7 @@ czertainlyConfig() {
 	_softwareCryptographyProvider=$(x2tf "$_softwareCryptographyProvider")
 	_keycloak=$(x2tf                     "$_keycloak")
 	_utilsService=$(x2tf                 "$_utilsService")
+	_emailProvider=$(x2tf                "$_emailProvider")
 
 	echo "---
 czertainly:
@@ -604,6 +680,7 @@ czertainly:
   softwareCryptographyProvider: $_softwareCryptographyProvider
   keycloak: $_keycloak
   utilsService: $_utilsService
+  emailProvider: $_emailProvider
 " > $newSettings
 
 	if `diff $newSettings $settings >/dev/null 2>&1`
@@ -1024,6 +1101,9 @@ main() {
 	    ;;
 	'czertainly')
 	    czertainlyConfig
+	    ;;
+	'mail')
+	    emailConfig
 	    ;;
 	'install')
 	    if confirm "Have you set up access credentials to harbor.3key.company and possibly adjusted other options? Please confirm installation by selecting Yes button. Complete installation takes about 15 minutes."
