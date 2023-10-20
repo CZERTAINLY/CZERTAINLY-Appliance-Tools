@@ -73,7 +73,7 @@ czertainly-appliance-tools (2.7.0~rc2) stable; urgency=medium
   * updated ansible-role-rke2
 
  -- Jan Tomášek <jan.tomasek@3key.company>  Tue,  4 Apr 2023 15:26:00 +0100
-
+ 
 czertainly-appliance-tools (2.6.0) stable; urgency=medium
 
   * fix version
