@@ -1,3 +1,9 @@
+czertainly-appliance-tools (2.9.0) stable; urgency=medium
+
+  * release 2.9.0
+
+ -- Jakub Morávek <jakub.moravek@3key.company>  Fri, 20 Oct 2023 9:23:00 +0200
+
 czertainly-appliance-tools (2.9.0~rc2) stable; urgency=medium
 
   * prepare 2.9.0
