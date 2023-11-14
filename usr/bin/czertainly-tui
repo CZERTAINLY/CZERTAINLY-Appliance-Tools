@@ -985,12 +985,12 @@ docker() {
 	newSettings=`mktemp /tmp/czertainly-manager.docker.XXXXXX`
 
 	echo "---
-docker:
-  server: $_server
-  email: $_email
-  secret: $secret
-  username: $_username
-  password: $_password" >> $newSettings
+docker:" > $newSettings
+	[ "$_server"   != '' ] && echo "  server: $_server"     >> $newSettings
+	[ "$_email"    != '' ] && echo "  email: $_email"       >> $newSettings
+	[ "$secret"    != '' ] && echo "  secret: $secret"      >> $newSettings
+	[ "$_username" != '' ] && echo "  username: $_username" >> $newSettings
+	[ "$_password" != '' ] && echo "  password: $_password" >> $newSettings
 
 	if `diff $newSettings $settings >/dev/null 2>&1`
 	then
