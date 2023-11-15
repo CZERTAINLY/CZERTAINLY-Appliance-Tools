@@ -8,7 +8,10 @@ T_VERSION=`apt -q show czertainly-appliance-tools 2>&1 |grep ^Version | sed "s/V
 [ "x$T_VERSION" != "$T_VERSION" ] && TOOLS_VERSION=$T_VERSION
 
 CHART_VERSION="?.?.?"
-C_VERSION=`helm -n czertainly list -o json | jq .[0].chart | tr -d \"`
-[ "x$C_VERSION" != "xnull" ] && CHART_VERSION=$C_VERSION
+if [ -e /usr/bin/helm ]
+then
+  C_VERSION=`helm -n czertainly list -o json | jq .[0].chart | tr -d \"`
+  [ "x$C_VERSION" != "xnull" ] && CHART_VERSION=$C_VERSION
+fi
 
 echo "appliance: $APPLIANCE_VERSION; tools: $TOOLS_VERSION; chart: $CHART_VERSION"
