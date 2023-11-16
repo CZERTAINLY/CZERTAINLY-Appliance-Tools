@@ -1,5 +1,8 @@
 #!/bin/bash
 
+czertainly-versions
+echo ""
+
 declare -a NS=( 'kube-system' 'cert-manager' 'czertainly' )
 
 kubectl='/var/lib/rancher/rke2/bin/kubectl'
