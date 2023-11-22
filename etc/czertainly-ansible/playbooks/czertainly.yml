@@ -4,6 +4,13 @@
   connection: local
 
   pre_tasks:
+    - name: get czertainly versions
+      ansible.builtin.shell: /usr/bin/czertainly-versions
+      tags: always
+      changed_when: false
+      register: versions
+    - name: CZERTAINLY versions
+      ansible.builtin.debug: msg={{ versions.stdout }}
     - name: check if keycloak file exists
       ansible.builtin.stat:
         path: "/etc/czertainly-ansible/vars/keycloak.yml"
