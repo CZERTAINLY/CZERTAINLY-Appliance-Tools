@@ -69,6 +69,9 @@
       - owner: "czertainly"
         group: "czertainly"
         dir: "/home/czertainly/.kube"
+    # All CZERTAINLY services are running in parallel and causing big
+    # stress on DB, it is better to support more simultaneous connections.
+    postgres_max_connections: 250
 
   # Now we filterout those dict keys which have environment valuables
   # which have value equal to ''. This and previous block is need to

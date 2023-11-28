@@ -8,7 +8,7 @@
 	branch = develop
 [submodule "etc/czertainly-ansible/roles/postgres"]
 	path = etc/czertainly-ansible/roles/postgres
-	url = https://github.com/3KeyCompany/ansible-role-postgres.git
+	url = git@github.com:semik/ansible-role-postgres.git
 	branch = develop
 [submodule "etc/czertainly-ansible/roles/helm"]
 	path = etc/czertainly-ansible/roles/helm
