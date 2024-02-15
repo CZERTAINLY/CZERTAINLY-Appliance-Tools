@@ -1,3 +1,11 @@
+czertainly-appliance-tools (2.11.0) stable; urgency=medium
+
+  * release 2.11.0
+  * add support for py MS AD
+  * fix Bash Completion for helm and kubectl
+
+ -- Jan Tomášek <jan.tomasek@3key.company>  Sat, 10 Feb 2024 18:30:00 +0200
+
 czertainly-appliance-tools (2.10.0) stable; urgency=medium
 
   * release 2.10.0

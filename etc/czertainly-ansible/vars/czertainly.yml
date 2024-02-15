@@ -1,9 +1,10 @@
 ---
 czertainly:
-  version: 2.9.0
+  version: 2.11.0
   commonCredentialProvider: true
   ejbcaNgConnector: true
-  msAdcsConnector: true
+  msAdcsConnector: false
+  pymsAdcsConnector: true
   x509ComplianceProvider: true
   cryptosenseDiscoveryProvider: true
   networkDiscoveryProvider: true
