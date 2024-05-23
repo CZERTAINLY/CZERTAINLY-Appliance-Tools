@@ -4,12 +4,12 @@ czertainly:
   commonCredentialProvider: true
   ejbcaNgConnector: true
   msAdcsConnector: false
-  pymsAdcsConnector: true
+  pymsAdcsConnector: false
   x509ComplianceProvider: true
   cryptosenseDiscoveryProvider: true
   networkDiscoveryProvider: true
   keystoreEntityProvider: true
   softwareCryptographyProvider: true
   keycloak: true
-  utilsService: true
-  emailProvider: true
+  utilsService: false
+  emailProvider: false
