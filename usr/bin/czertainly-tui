@@ -38,6 +38,7 @@ mainMenu=(
     'czertainly'   "Configure CZERTAINLY"
     'install'      "Install CZERTAINLY"
     'status'       "Show CZERTAINLY status"
+    'versions'     "Show CZERTAINLY images versions"
     'advanced'     "Advanced options"
     'exit'         "Exit CZERTAINLY manager"
 )
@@ -601,8 +602,12 @@ czertainlyConfig() {
     utilsService=$(tf2x $(grep < $settings '^ *utilsService: ' | sed "s/^ *utilsService: *//"))
 	emailProvider=$(tf2x $(grep < $settings '^ *emailProvider: ' | sed "s/^ *emailProvider: *//"))
 
+	# dialog --form require parameters height width formheight
+	#  * at this moment we need 13 parameters from user
+    #  * height = 0 means the smallest possible window size
+	#
     dialog --backtitle "$backTitleCentered" --title " CZERTAINLY configuration " \
-	   --form "Parameters of CZERTAINLY instalation" 20 $eCOLS 13 \
+	   --form "Parameters of CZERTAINLY instalation" 0 $eCOLS 13 \
 	   "CZERTAINLY version:"              1 1 "$version"                       1 21 $maxInputLen $maxLen \
 	   "Common Credential Provider:"      2 1 "$commonCredentialProvider"      2 33 2            1 \
 	   "EJBCA NG Connector:"              3 1 "$ejbcaNgConnector"              3 33 2            1 \
@@ -1058,6 +1063,16 @@ status() {
     read
 }
 
+versions() {
+    clear -x
+    echo ""
+    /usr/bin/czertainly-versions --detailed
+    echo ""
+    echo "press enter to return into menu"
+    read
+}
+
+
 main() {
     # duplicate (make a backup copy of) file descriptor 1 on descriptor 3
     exec 3>&1
@@ -1124,6 +1139,9 @@ main() {
 	    ;;
 	'status')
 	    status
+	    ;;
+	'versions')
+	    versions
 	    ;;
 	'advanced')
 	    logger "main_menu: advanced";
