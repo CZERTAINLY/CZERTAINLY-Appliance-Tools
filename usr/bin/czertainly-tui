@@ -38,7 +38,6 @@ mainMenu=(
     'czertainly'   "Configure CZERTAINLY"
     'install'      "Install CZERTAINLY"
     'status'       "Show CZERTAINLY status"
-    'versions'     "Show CZERTAINLY images versions"
     'advanced'     "Advanced options"
     'exit'         "Exit CZERTAINLY manager"
 )
@@ -53,7 +52,8 @@ advancedMenu=(
     'removeC'            'Remove CZERTAINLY'
     'installC'           'Install only CZERTAINLY'
     'remove'             'Remove RKE2 & CZERTAINLY'
-    'shell'              'Enter system shell'
+    'versions'           'Show CZERTAINLY images versions'
+	'shell'              'Enter system shell'
     'reboot'             'Reboot system'
     'shutdown'           'Shutdown system'
     'exit'               "Exit advanced menu"
@@ -289,6 +289,9 @@ advanced() {
 	    execAnsible \
 		    "sudo /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --tags czertainly"
 	    logger "$p: installing CZERTAINLY only"
+	    ;;
+	'versions')
+	    versions
 	    ;;
 	'shell')
 	    clear -x
@@ -1139,9 +1142,6 @@ main() {
 	    ;;
 	'status')
 	    status
-	    ;;
-	'versions')
-	    versions
 	    ;;
 	'advanced')
 	    logger "main_menu: advanced";
