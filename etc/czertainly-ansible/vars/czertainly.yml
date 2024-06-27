@@ -1,6 +1,6 @@
 ---
 czertainly:
-  version: 0.0.0
+  version: 2.12.0
   commonCredentialProvider: true
   ejbcaNgConnector: true
   msAdcsConnector: false
