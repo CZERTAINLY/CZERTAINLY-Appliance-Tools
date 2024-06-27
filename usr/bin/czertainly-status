@@ -16,26 +16,26 @@ do
     cmd="kubectl get pods -n "$ns" --no-headers=true"
     if output=$($cmd 2>$tmpf_err | grep -v 'ingress-nginx-controller.*Pending' >$tmpf)
     then
-		total_cnt=`cat $tmpf | wc -l`
-		running_cnt=`cat $tmpf | tr -s ' ' | cut -f 3 -d ' ' | grep Running | wc -l`
-		completed_cnt=`cat $tmpf | tr -s ' ' | cut -f 3 -d ' ' | grep Completed | wc -l`
-		done_cnt=$(($running_cnt + $completed_cnt))
-		if [ $total_cnt -gt 0 ] && [ $total_cnt -eq $done_cnt ]
-		then
-			echo "$ns	$running_cnt PODs OK"
-			OK=$(( $OK+1 ))
-		else
-			echo "$ns	only $done_cnt of $total_cnt PODs are fine"
-			cat $tmpf | sed "s/^/  /"
-		fi
-		if [ $detailed ] && [ "$ns" == 'czertainly' ]
-		then
-			echo "czertainly versions:"
-			kubectl -n $ns get pods -o jsonpath='{range .items[*]}{"  "}{.metadata.labels.app\.kubernetes\.io/name}{":  "}{range .spec.containers[*]}{.image}{" "}{end}{"\n"}{end}'
-		fi
+        total_cnt=`cat $tmpf | wc -l`
+        running_cnt=`cat $tmpf | tr -s ' ' | cut -f 3 -d ' ' | grep Running | wc -l`
+        completed_cnt=`cat $tmpf | tr -s ' ' | cut -f 3 -d ' ' | grep Completed | wc -l`
+        done_cnt=$(($running_cnt + $completed_cnt))
+        if [ $total_cnt -gt 0 ] && [ $total_cnt -eq $done_cnt ]
+        then
+            echo "$ns	$running_cnt PODs OK"
+            OK=$(( $OK+1 ))
+        else
+            echo "$ns	only $done_cnt of $total_cnt PODs are fine"
+            cat $tmpf | sed "s/^/  /"
+        fi
+        if [ $detailed ] && [ "$ns" == 'czertainly' ]
+        then
+            echo "czertainly versions:"
+            kubectl -n $ns get pods -o jsonpath='{range .items[*]}{"  "}{.metadata.labels.app\.kubernetes\.io/name}{":  "}{range .spec.containers[*]}{.image}{" "}{end}{"\n"}{end}'
+        fi
     else
-		output_err=`cat $tmpf_err`
-		echo "Failed to exec $cmd: $output_err"
+        output_err=`cat $tmpf_err`
+        echo "Failed to exec $cmd: $output_err"
     fi
     rm $tmpf
     rm $tmpf_err
