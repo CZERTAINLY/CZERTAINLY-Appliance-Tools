@@ -53,7 +53,7 @@ advancedMenu=(
     'installC'           'Install only CZERTAINLY'
     'remove'             'Remove RKE2 & CZERTAINLY'
     'versions'           'Show CZERTAINLY images versions'
-	'shell'              'Enter system shell'
+    'shell'              'Enter system shell'
     'reboot'             'Reboot system'
     'shutdown'           'Shutdown system'
     'exit'               "Exit advanced menu"
