@@ -1,3 +1,12 @@
+czertainly-appliance-tools (2.12.0) stable; urgency=medium
+  * release 2.12.0
+  * add --detailed option for czertainly-version
+  * by default offer only free components
+  * fix bug disabling network disc. together with crypto sense
+  * fix config window size
+
+ -- Jan Tomášek <jan.tomasek@3key.company>  Sat, 10 Feb 2024 18:30:00 +0200
+
 czertainly-appliance-tools (2.11.0) stable; urgency=medium
 
   * release 2.11.0
