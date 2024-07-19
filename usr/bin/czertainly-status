@@ -28,7 +28,7 @@ do
             echo "$ns	only $done_cnt of $total_cnt PODs are fine"
             cat $tmpf | sed "s/^/  /"
         fi
-        if [ $detailed ] && [ "$ns" == 'czertainly' ]
+        if [ $detailed -ne 0 ] && [ "$ns" == 'czertainly' ]
         then
             echo "czertainly versions:"
             kubectl -n $ns get pods -o jsonpath='{range .items[*]}{"  "}{.metadata.labels.app\.kubernetes\.io/name}{":  "}{range .spec.containers[*]}{.image}{" "}{end}{"\n"}{end}'
