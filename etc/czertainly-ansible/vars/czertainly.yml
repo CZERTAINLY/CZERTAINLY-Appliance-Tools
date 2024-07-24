@@ -1,15 +1,15 @@
 ---
 czertainly:
-  version: 2.11.0
+  version: 2.12.0
   commonCredentialProvider: true
   ejbcaNgConnector: true
   msAdcsConnector: false
-  pymsAdcsConnector: true
+  pymsAdcsConnector: false
   x509ComplianceProvider: true
-  cryptosenseDiscoveryProvider: true
+  cryptosenseDiscoveryProvider: false
   networkDiscoveryProvider: true
   keystoreEntityProvider: true
   softwareCryptographyProvider: true
   keycloak: true
-  utilsService: true
-  emailProvider: true
+  utilsService: false
+  emailProvider: false
