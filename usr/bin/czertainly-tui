@@ -52,6 +52,7 @@ advancedMenu=(
     'removeC'            'Remove CZERTAINLY'
     'installC'           'Install only CZERTAINLY'
     'remove'             'Remove RKE2 & CZERTAINLY'
+    'versions'           'Show CZERTAINLY images versions'
     'shell'              'Enter system shell'
     'reboot'             'Reboot system'
     'shutdown'           'Shutdown system'
@@ -288,6 +289,9 @@ advanced() {
 	    execAnsible \
 		    "sudo /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --tags czertainly"
 	    logger "$p: installing CZERTAINLY only"
+	    ;;
+	'versions')
+	    versions
 	    ;;
 	'shell')
 	    clear -x
@@ -601,8 +605,12 @@ czertainlyConfig() {
     utilsService=$(tf2x $(grep < $settings '^ *utilsService: ' | sed "s/^ *utilsService: *//"))
 	emailProvider=$(tf2x $(grep < $settings '^ *emailProvider: ' | sed "s/^ *emailProvider: *//"))
 
+	# dialog --form require parameters height width formheight
+	#  * at this moment we need 13 parameters from user
+    #  * height = 0 means the smallest possible window size
+	#
     dialog --backtitle "$backTitleCentered" --title " CZERTAINLY configuration " \
-	   --form "Parameters of CZERTAINLY instalation" 20 $eCOLS 13 \
+	   --form "Parameters of CZERTAINLY instalation" 0 $eCOLS 13 \
 	   "CZERTAINLY version:"              1 1 "$version"                       1 21 $maxInputLen $maxLen \
 	   "Common Credential Provider:"      2 1 "$commonCredentialProvider"      2 33 2            1 \
 	   "EJBCA NG Connector:"              3 1 "$ejbcaNgConnector"              3 33 2            1 \
@@ -1057,6 +1065,16 @@ status() {
     echo "press enter to return into menu"
     read
 }
+
+versions() {
+    clear -x
+    echo ""
+    /usr/bin/czertainly-versions --detailed
+    echo ""
+    echo "press enter to return into menu"
+    read
+}
+
 
 main() {
     # duplicate (make a backup copy of) file descriptor 1 on descriptor 3

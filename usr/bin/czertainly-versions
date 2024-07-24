@@ -15,3 +15,16 @@ then
 fi
 
 echo "appliance: $APPLIANCE_VERSION; tools: $TOOLS_VERSION; chart: $CHART_VERSION"
+
+if [ "$1" == '--detailed' ]
+then
+  if kubectl version >/dev/null 2>&1
+  then
+    echo ""
+    kubectl get pods -n czertainly -o jsonpath='{range .items[*]}{.metadata.labels.app\.kubernetes\.io/name}{"\n"}{range .spec.initContainers[*]}  init: {.image}{"\n"}{end}{range .spec.containers[*]}  cont: {.image}{"\n"}{end}{end}'
+  else
+    echo ""
+    echo "missing or mailfunction kubectl can't provide more informations"
+    exit 1
+  fi
+fi
