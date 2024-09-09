@@ -596,6 +596,7 @@ czertainlyConfig() {
     ejbcaNgConnector=$(tf2x $(grep < $settings '^ *ejbcaNgConnector: ' | sed "s/^ *ejbcaNgConnector: *//"))
     msAdcsConnector=$(tf2x $(grep < $settings '^ *msAdcsConnector: ' | sed "s/^ *msAdcsConnector: *//"))
     pymsAdcsConnector=$(tf2x $(grep < $settings '^ *pymsAdcsConnector: ' | sed "s/^ *pymsAdcsConnector: *//"))
+    hashicorpVaultConnector=$(tf2x $(grep < $settings '^ *hashicorpVaultConnector: ' | sed "s/^ *hashicorpVaultConnector: *//"))
     x509ComplianceProvider=$(tf2x $(grep < $settings '^ *x509ComplianceProvider: ' | sed "s/^ *x509ComplianceProvider: *//"))
     cryptosenseDiscoveryProvider=$(tf2x $(grep < $settings '^ *cryptosenseDiscoveryProvider: ' | sed "s/^ *cryptosenseDiscoveryProvider: *//"))
     networkDiscoveryProvider=$(tf2x $(grep < $settings '^ *networkDiscoveryProvider: ' | sed "s/^ *networkDiscoveryProvider: *//"))
@@ -616,14 +617,15 @@ czertainlyConfig() {
 	   "EJBCA NG Connector:"              3 1 "$ejbcaNgConnector"              3 33 2            1 \
 	   "MS ADCS Connector (deprecated):"  4 1 "$msAdcsConnector"               4 33 2            1 \
 	   "py MS ADCS Connector:"            5 1 "$pymsAdcsConnector"             5 33 2            1 \
-	   "X509 Compliance Provider:"        6 1 "$x509ComplianceProvider"        6 33 2            1 \
-	   "Cryptosense Discovery Provider:"  7 1 "$cryptosenseDiscoveryProvider"  7 33 2            1 \
-	   "Network Discovery Provider:"      8 1 "$networkDiscoveryProvider"      8 33 2            1 \
-	   "Keystore Entity Provider:"        9 1 "$keystoreEntityProvider"        9 33 2            1 \
-	   "Software Cryptography Provider:" 10 1 "$softwareCryptographyProvider" 10 33 2            1 \
-	   "Keycloak IdP:"                   11 1 "$keycloak"                     11 33 2            1 \
-	   "Utils Service:"                  12 1 "$utilsService"                 12 33 2            1 \
-	   "email Provider:"                 13 1 "$emailProvider"                13 33 2            1 \
+	   "HashiCorp Vaul Connector:"        6 1 "$hashicorpVaultConnector"       6 33 2            1 \
+	   "X509 Compliance Provider:"        7 1 "$x509ComplianceProvider"        7 33 2            1 \
+	   "Cryptosense Discovery Provider:"  8 1 "$cryptosenseDiscoveryProvider"  8 33 2            1 \
+	   "Network Discovery Provider:"      9 1 "$networkDiscoveryProvider"      9 33 2            1 \
+	   "Keystore Entity Provider:"       10 1 "$keystoreEntityProvider"       10 33 2            1 \
+	   "Software Cryptography Provider:" 11 1 "$softwareCryptographyProvider" 11 33 2            1 \
+	   "Keycloak IdP:"                   12 1 "$keycloak"                     12 33 2            1 \
+	   "Utils Service:"                  13 1 "$utilsService"                 13 33 2            1 \
+	   "email Provider:"                 14 1 "$emailProvider"                14 33 2            1 \
 	   2>$tmpF
     # get dialog's exit status
     return_value=$?
@@ -640,6 +642,7 @@ czertainlyConfig() {
 	read -r _ejbcaNgConnector
 	read -r _msAdcsConnector
 	read -r _pymsAdcsConnector
+	read -r _hashicorpVaultConnector
 	read -r _x509ComplianceProvider
 	read -r _cryptosenseDiscoveryProvider
 	read -r _networkDiscoveryProvider
@@ -656,6 +659,7 @@ czertainlyConfig() {
 	logger "$p: ejbcaNgConnector             '$ejbcaNgConnector'             => '$_ejbcaNgConnector'"
 	logger "$p: msAdcsConnector              '$msAdcsConnector'              => '$_msAdcsConnector'"
 	logger "$p: pymsAdcsConnector            '$pymsAdcsConnector'            => '$_pymsAdcsConnector'"
+	logger "$p: hashicorpVaultConnector      '$hashicorpVaultConnector'      => '$_hashicorpVaultConnector'"
 	logger "$p: x509ComplianceProvider       '$x509ComplianceProvider'       => '$_x509ComplianceProvider'"
 	logger "$p: cryptosenseDiscoveryProvider '$cryptosenseDiscoveryProvider' => '$_cryptosenseDiscoveryProvider'"
 	logger "$p: networkDiscoveryProvider     '$networkDiscoveryProvider'     => '$_networkDiscoveryProvider'"
@@ -671,6 +675,7 @@ czertainlyConfig() {
 	_ejbcaNgConnector=$(x2tf             "$_ejbcaNgConnector")
 	_msAdcsConnector=$(x2tf              "$_msAdcsConnector")
 	_pymsAdcsConnector=$(x2tf            "$_pymsAdcsConnector")
+	_hashicorpVaultConnector=$(x2tf      "$_hashicorpVaultConnector")
 	_x509ComplianceProvider=$(x2tf       "$_x509ComplianceProvider")
 	_cryptosenseDiscoveryProvider=$(x2tf "$_cryptosenseDiscoveryProvider")
 	_networkDiscoveryProvider=$(x2tf     "$_networkDiscoveryProvider")
@@ -687,6 +692,7 @@ czertainly:
   ejbcaNgConnector: $_ejbcaNgConnector
   msAdcsConnector: $_msAdcsConnector
   pymsAdcsConnector: $_pymsAdcsConnector
+  hashicorpVaultConnector: $_hashicorpVaultConnector
   x509ComplianceProvider: $_x509ComplianceProvider
   cryptosenseDiscoveryProvider: $_cryptosenseDiscoveryProvider
   networkDiscoveryProvider: $_networkDiscoveryProvider
@@ -915,7 +921,7 @@ changeHostname() {
     hostname=`hostname -f`
 
     dialog --backtitle "$backTitleCentered" --title " System hostname " \
-	   --form "Provide fully qualifiled hostname" 10 $eCOLS 3 \
+	   --form "\nWARNING: Changing the hostname will reboot the system.\n\nProvide fully qualifiled hostname" 12 $eCOLS 1 \
 	   ""  1 1 "$hostname" 1 2 $maxInputLen $maxLen \
 	   2>$tmpF
     # get dialog's exit status
