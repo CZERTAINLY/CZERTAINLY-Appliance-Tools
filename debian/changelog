@@ -1,6 +1,7 @@
-czertainly-appliance-tools (2.13.0~rc1) stable; urgency=medium
+czertainly-appliance-tools (2.13.0~rc2) stable; urgency=medium
   * release 2.13.0
   * add support for hashiCorp Vault Connector
+  * add hostname change to sudoers to not ask for password
 
  -- Jan Tomášek <jan.tomasek@3key.company>  Fri,  6 Sep 2024 11:24:00 +0200
 
