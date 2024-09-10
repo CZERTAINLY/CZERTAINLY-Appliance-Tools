@@ -25,7 +25,7 @@ git submodule update --init --recursive
 ### Update after changes in submodules
 ```sh
 cd CZERTAINLY-Appliance-Tools
-git submodule foreach 'git fetch origin; \
+git submodule foreach 'git pull origin; \
   git checkout develop; \
   git reset --hard origin/develop; \
   git submodule update --recursive; \
