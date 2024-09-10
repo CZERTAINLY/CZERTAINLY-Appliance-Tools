@@ -8,12 +8,12 @@ Is created as [git submodule](https://www.vogella.com/tutorials/GitSubmodules/ar
 ### First time initialization
 ```sh
 cd CZERTAINLY-Appliance-Tools
-git submodule add -b develop https://github.com/3KeyCompany/ansible-role-czertainly-branding.git etc/czertainly-ansible/roles/branding
-git submodule add -b develop https://github.com/3KeyCompany/ansible-role-http-proxy.git etc/czertainly-ansible/roles/http-proxy
-git submodule add -b develop https://github.com/3KeyCompany/ansible-role-postgres.git etc/czertainly-ansible/roles/postgres
-git submodule add -b develop https://github.com/3KeyCompany/ansible-role-helm.git etc/czertainly-ansible/roles/helm
-git submodule add -b develop https://github.com/3KeyCompany/ansible-role-rke2.git etc/czertainly-ansible/roles/rke2
-git submodule add -b develop https://github.com/3KeyCompany/ansible-role-czertainly.git etc/czertainly-ansible/roles/czertainly
+git submodule add -b develop https://github.com/CZERTAINLY/ansible-role-czertainly-branding.git etc/czertainly-ansible/roles/branding
+git submodule add -b develop https://github.com/CZERTAINLY/ansible-role-http-proxy.git etc/czertainly-ansible/roles/http-proxy
+git submodule add -b develop https://github.com/CZERTAINLY/ansible-role-postgres.git etc/czertainly-ansible/roles/postgres
+git submodule add -b develop https://github.com/CZERTAINLY/ansible-role-helm.git etc/czertainly-ansible/roles/helm
+git submodule add -b develop https://github.com/CZERTAINLY/ansible-role-rke2.git etc/czertainly-ansible/roles/rke2
+git submodule add -b develop https://github.com/CZERTAINLY/ansible-role-czertainly.git etc/czertainly-ansible/roles/czertainly
 ```
 
 ### Update after checkout
