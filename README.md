@@ -26,8 +26,8 @@ git submodule update --init --recursive
 ```sh
 cd CZERTAINLY-Appliance-Tools
 git submodule foreach 'git fetch origin; \
-  git checkout $(git rev-parse --abbrev-ref HEAD); \
-  git reset --hard origin/$(git rev-parse --abbrev-ref HEAD); \
+  git checkout develop; \
+  git reset --hard origin/develop; \
   git submodule update --recursive; \
   git clean -dfx'
 ```
