@@ -19,7 +19,7 @@
       tags: always
     - name: Generate secret for keycloak
       ansible.builtin.set_fact:
-        key_cloak_secret: "{{ lookup('ansible.builtin.password', '/dev/null') }}"
+        key_cloak_secret: "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits']) }}"
       when: not keycloak_result.stat.exists
       tags: always
     - name: Write secret for keycloak

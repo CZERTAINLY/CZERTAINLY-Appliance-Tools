@@ -1,4 +1,4 @@
-czertainly-appliance-tools (2.13.0~rc15) stable; urgency=medium
+czertainly-appliance-tools (2.13.0~rc16) stable; urgency=medium
   * release 2.13.0
   * add support for hashiCorp Vault Connector
   * add hostname change to sudoers to not ask for password
@@ -6,6 +6,7 @@ czertainly-appliance-tools (2.13.0~rc15) stable; urgency=medium
   * ansible lint on all roles and playbooks itself
   * upgrade certmanager to v1.15.3
   * upgrade local-path-provisioner v0.0.29
+  * define charset for random generator of Keycloak client secret
 
  -- Jan Tomášek <jan.tomasek@3key.company>  Fri,  6 Sep 2024 11:24:00 +0200
 
