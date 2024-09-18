@@ -1,55 +1,57 @@
 ---
-- name: czertainly host config
+- name: Czertainly host config
   hosts: all
   connection: local
 
   pre_tasks:
-    - name: get czertainly versions
-      ansible.builtin.shell: /usr/bin/czertainly-versions
+    - name: Get czertainly versions
+      ansible.builtin.command: /usr/bin/czertainly-versions
       tags: always
       changed_when: false
       register: versions
     - name: CZERTAINLY versions
-      ansible.builtin.debug: msg={{ versions.stdout }}
-    - name: check if keycloak file exists
+      ansible.builtin.debug:
+        msg: "{{ versions.stdout }}"
+    - name: Check if keycloak file exists
       ansible.builtin.stat:
         path: "/etc/czertainly-ansible/vars/keycloak.yml"
       register: keycloak_result
       tags: always
-    - name: generate secret for keycloak
+    - name: Generate secret for keycloak
       ansible.builtin.set_fact:
-        key_cloak_secret: "{{ lookup('ansible.builtin.password', '/dev/null') }}"
+        key_cloak_secret: "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits']) }}"
       when: not keycloak_result.stat.exists
       tags: always
-    - name: write secret for keycloak
+    - name: Write secret for keycloak
       ansible.builtin.template:
         src: "keycloak.yml.j2"
         dest: "/etc/czertainly-ansible/vars/keycloak.yml"
+        mode: "0640"
       when: not keycloak_result.stat.exists
       tags: always
-    - name: "read database.yml"
-      include_vars: /etc/czertainly-ansible/vars/database.yml
+    - name: "Read database.yml"
+      ansible.builtin.include_vars: /etc/czertainly-ansible/vars/database.yml
       tags: always
-    - name: "read docker.yml"
-      include_vars: /etc/czertainly-ansible/vars/docker.yml
+    - name: "Read docker.yml"
+      ansible.builtin.include_vars: /etc/czertainly-ansible/vars/docker.yml
       tags: always
-    - name: "read proxy.yml"
-      include_vars: /etc/czertainly-ansible/vars/proxy.yml
+    - name: "Read proxy.yml"
+      ansible.builtin.include_vars: /etc/czertainly-ansible/vars/proxy.yml
       tags: always
-    - name: "read ingress.yml"
-      include_vars: /etc/czertainly-ansible/vars/ingress.yml
+    - name: "Read ingress.yml"
+      ansible.builtin.include_vars: /etc/czertainly-ansible/vars/ingress.yml
       tags: always
-    - name: "read trustedCA.yml"
-      include_vars: /etc/czertainly-ansible/vars/trustedCA.yml
+    - name: "Read trustedCA.yml"
+      ansible.builtin.include_vars: /etc/czertainly-ansible/vars/trustedCA.yml
       tags: always
-    - name: "read czertainly.yml"
-      include_vars: /etc/czertainly-ansible/vars/czertainly.yml
+    - name: "Read czertainly.yml"
+      ansible.builtin.include_vars: /etc/czertainly-ansible/vars/czertainly.yml
       tags: always
-    - name: "read keycloak.yml"
-      include_vars: /etc/czertainly-ansible/vars/keycloak.yml
+    - name: "Read keycloak.yml"
+      ansible.builtin.include_vars: /etc/czertainly-ansible/vars/keycloak.yml
       tags: always
-    - name: "read email.yml"
-      include_vars: /etc/czertainly-ansible/vars/email.yml
+    - name: "Read email.yml"
+      ansible.builtin.include_vars: /etc/czertainly-ansible/vars/email.yml
       tags: always
 
   vars:

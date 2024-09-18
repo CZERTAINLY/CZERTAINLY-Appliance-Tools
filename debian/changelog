@@ -1,3 +1,15 @@
+czertainly-appliance-tools (2.13.0) stable; urgency=medium
+  * release 2.13.0
+  * add support for hashiCorp Vault Connector
+  * add hostname change to sudoers to not ask for password
+  * better checking that RKE2 is operational
+  * ansible lint on all roles and playbooks itself
+  * upgrade certmanager to v1.15.3
+  * upgrade local-path-provisioner v0.0.29
+  * define charset for random generator of Keycloak client secret
+
+ -- Jan Tomášek <jan.tomasek@3key.company>  Fri,  6 Sep 2024 11:24:00 +0200
+
 czertainly-appliance-tools (2.12.0) stable; urgency=medium
   * release 2.12.0
   * add --detailed option for czertainly-version
@@ -107,7 +119,7 @@ czertainly-appliance-tools (2.7.0~rc2) stable; urgency=medium
   * updated ansible-role-rke2
 
  -- Jan Tomášek <jan.tomasek@3key.company>  Tue,  4 Apr 2023 15:26:00 +0100
- 
+
 czertainly-appliance-tools (2.6.0) stable; urgency=medium
 
   * fix version
