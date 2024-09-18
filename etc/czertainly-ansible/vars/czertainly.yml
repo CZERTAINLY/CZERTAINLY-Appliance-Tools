@@ -8,6 +8,7 @@ czertainly:
   hashicorpVaultConnector: false
   x509ComplianceProvider: true
   cryptosenseDiscoveryProvider: false
+  ctLogsDiscoveryProvider: true
   networkDiscoveryProvider: true
   keystoreEntityProvider: true
   softwareCryptographyProvider: true
