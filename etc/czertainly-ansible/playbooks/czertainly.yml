@@ -62,9 +62,13 @@
     proxy_env:
       http_proxy: "{{ proxy.http | default('') }}"
       HTTP_PROXY: "{{ proxy.http | default('') }}"
+      https_proxy: "{{ proxy.https | default('') }}"
       HTTPS_PROXY: "{{ proxy.https | default('') }}"
+      ftp_proxy: "{{ proxy.ftp | default('') }}"
       FTP_PROXY: "{{ proxy.ftp | default('') }}"
+      ftps_proxy: "{{ proxy.ftps | default('') }}"
       FTPS_PROXY: "{{ proxy.ftps | default('') }}"
+      no_proxy: "{{ proxy.dont_use_for | default('') | join(',') }}"
       NO_PROXY: "{{ proxy.dont_use_for | default('') | join(',') }}"
     # by default rke2 role only install kube cfg for root
     custom_kube_cfg_dir:
