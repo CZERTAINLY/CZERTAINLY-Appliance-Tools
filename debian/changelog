@@ -1,8 +1,8 @@
-czertainly-appliance-tools (2.13.2~rc2) stable; urgency=medium
+czertainly-appliance-tools (2.13.2~rc3) stable; urgency=medium
   * fix tags support broken by changing include to include_task
+  * add HTTP proxy variables in both cases
 
- -- Jan Tomášek <jan.tomasek@3key.company>  Tue,  8 Oct 2024 14:00:00 +0200
-
+ -- Jan Tomášek <jan.tomasek@3key.company>  Tue,  8 Oct 2024 14:15:00 +0200
 
 czertainly-appliance-tools (2.13.1) stable; urgency=medium
   * add support for CT logs Discovery Provider
