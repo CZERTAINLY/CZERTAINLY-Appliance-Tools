@@ -61,7 +61,7 @@ networkMenu=(
     'hostname'     "Configure hostname"
     'network'      "Configure network parameters"
     'proxyHTTP'    "Configure HTTP proxy parameters"
-    'timeSync'     "Configure NTP parameters"
+#    'timeSync'     "Configure NTP parameters"
     'exit'         "Exit network menu"
 )
 networkSettings='/etc/czertainly-ansible/vars/network.yml'
