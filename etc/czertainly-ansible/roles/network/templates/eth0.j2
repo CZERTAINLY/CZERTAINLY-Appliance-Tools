@@ -1,0 +1,20 @@
+# {{ ansible_managed }}
+
+auto eth0
+allow-hotplug eth0
+{% if network is defined %}
+{% if network.usedhcp is defined and network.usedhcp %}
+iface eth0 inet dhcp
+{% else %}
+iface eth0 inet static
+   address {{ network.address }}
+   gateway {{ network.gateway }}
+   netmask {{ network.netmask }}
+{% if network.searchdomain is defined %}
+   dns-search {{ network.searchdomain }}
+{% endif %}
+{% if network.nameservers is defined %}
+   dns-nameservers {{ network.nameservers | join(' ') }}
+{% endif %}
+{% endif %}
+{% endif %}

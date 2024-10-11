@@ -1,0 +1,10 @@
+---
+- name: Create /etc/network/interfaces.d/eth0
+  ansible.builtin.template:
+    src: "eth0.j2"
+    dest: "/etc/network/interfaces.d/eth0"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: Restart networking
+  tags: network
