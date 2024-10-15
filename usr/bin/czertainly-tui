@@ -106,9 +106,9 @@ max_menu_rows() {
 
     if [ $needed -gt $eRows ]
     then
-    echo $eRows
+        echo $eRows
     else
-    echo $needed
+        echo $needed
     fi
 }
 
@@ -139,9 +139,9 @@ confirm() {
 
     if [ $return_value == $DIALOG_OK ]
     then
-    return 0
+        return 0
     else
-    return 1
+        return 1
     fi
 }
 
@@ -151,14 +151,14 @@ removeALL() {
     clear -x
     if [ -e $rkeUninstall ]
     then
-    logger "$p: calling $rkeUninstall"
-    sudo $rkeUninstall
-    echo ""
-    echo "RKE2 & CZERTAINLY removed, press enter key to return to menu"
-    read
+        logger "$p: calling $rkeUninstall"
+        sudo $rkeUninstall
+        echo ""
+        echo "RKE2 & CZERTAINLY removed, press enter key to return to menu"
+        read
     else
-    echo "RKE2 not present ($rkeUninstall), press enter key to return to menu"
-    read
+        echo "RKE2 not present ($rkeUninstall), press enter key to return to menu"
+        read
     fi
 }
 
@@ -168,53 +168,53 @@ removeCZERTAINLY() {
     clear -x
     if [ -e $kubectl ]
     then
-    cmd="$kubectl delete ns czertainly"
-    logger "$p: calling $cmd"
-    sudo $cmd
-    echo ""
-    echo "CZERTAINLY removed. Waiting for kubernetes to complete cleaning."
+        cmd="$kubectl delete ns czertainly"
+        logger "$p: calling $cmd"
+        sudo $cmd
+        echo ""
+        echo "CZERTAINLY removed. Waiting for kubernetes to complete cleaning."
 
-    sudo /usr/bin/rm /root/install/docker-secret.yaml
-    sudo /usr/bin/rm /root/install/czertainly-values.yaml
-    sudo /usr/bin/rm /root/install/czertainly-values.local.yaml
+        sudo /usr/bin/rm /root/install/docker-secret.yaml
+        sudo /usr/bin/rm /root/install/czertainly-values.yaml
+        sudo /usr/bin/rm /root/install/czertainly-values.local.yaml
 
-    cleaned=0
-    start=`date "+%s"`
-    while true
-    do
-        if `sudo $kubectl -n czertainly get all 2>&1 | grep 'No resources found' >/dev/null 2>&1`
-        then
         cleaned=0
-        logger "$p: czertainly name space deleted"
-        echo "DONE"
-        break
-        else
-        diff=$[`date "+%s"`-$start]
-        if [ $diff -gt $maxRemoveWait ]
-        then
-            msg="waiting take to long!"
-            logger "$p: $msg"
-            echo "$msg"
-            echo ""
-            sudo $kubectl -n czertainly get all
-            echo ""
-            echo "Kubernetes failled to remove czertaily namespace."
-            break
-        else
-            logger "$p: waiting ${diff}s ..."
-            echo "waiting ${diff}s ..."
-            sleep 10
-        fi
-        fi
-    done
-    echo ""
-    echo "Press enter key to return to menu."
-    read
+        start=`date "+%s"`
+        while true
+        do
+            if `sudo $kubectl -n czertainly get all 2>&1 | grep 'No resources found' >/dev/null 2>&1`
+            then
+                cleaned=0
+                logger "$p: czertainly name space deleted"
+                echo "DONE"
+                break
+            else
+                diff=$[`date "+%s"`-$start]
+                if [ $diff -gt $maxRemoveWait ]
+                then
+                    msg="waiting take to long!"
+                    logger "$p: $msg"
+                    echo "$msg"
+                    echo ""
+                    sudo $kubectl -n czertainly get all
+                    echo ""
+                    echo "Kubernetes failled to remove czertaily namespace."
+                    break
+                else
+                    logger "$p: waiting ${diff}s ..."
+                    echo "waiting ${diff}s ..."
+                    sleep 10
+                fi
+            fi
+        done
+        echo ""
+        echo "Press enter key to return to menu."
+        read
     else
-    echo "$kubectl is missing. Is RKE2 installed?"
-    echo ""
-    echo "Press enter key to return to menu."
-    read
+        echo "$kubectl is missing. Is RKE2 installed?"
+        echo ""
+        echo "Press enter key to return to menu."
+        read
     fi
 }
 
@@ -230,7 +230,7 @@ update() {
         logger "$p: upgrade finished and TUI was not changed"
     else
         logger "$p: upgrade finished and TUI WAS CHANGED"
-    echo "CZERTAINLY TUI was upgraded during system upgrade. It is recomended
+        echo "CZERTAINLY TUI was upgraded during system upgrade. It is recomended
 to close this session and re-loging back into appliance.
 "
     fi
@@ -277,19 +277,19 @@ advancedMenu() {
     'remove')
         if confirm "Remove RKE2 (kubernetes) including CZERTAINLY? Database will remain untouched."
         then
-        logger "$p: complete remove confirmed"
-        removeALL
+            logger "$p: complete remove confirmed"
+            removeALL
         else
-        logger "$p: complete remove canceled"
+            logger "$p: complete remove canceled"
         fi
         ;;
     'removeC')
         if confirm "Remove CZERTAINLY installation? Database will remain untouched."
         then
-        logger "$p: complete remove confirmed"
-        removeCZERTAINLY
+            logger "$p: complete remove confirmed"
+            removeCZERTAINLY
         else
-        logger "$p: complete remove canceled"
+            logger "$p: complete remove canceled"
         fi
         ;;
     'installC')
@@ -551,8 +551,8 @@ proxyHTTP() {
 
     if [ $return_value != $DIALOG_OK ]
     then
-    logger "$p: dialog not OK => returing without any change"
-    return 1
+        logger "$p: dialog not OK => returing without any change"
+        return 1
     fi
 
     cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
@@ -640,8 +640,8 @@ database() {
 
     if [ $return_value != $DIALOG_OK ]
     then
-    logger "$p: dialog not OK => returing without any change"
-    return 1
+        logger "$p: dialog not OK => returing without any change"
+        return 1
     fi
 
     cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
@@ -676,12 +676,12 @@ postgres:" > $newSettings
 
         if `diff $newSettings $settings >/dev/null 2>&1`
         then
-        logger "$p: nothing changed"
-        rm $newSettings
+            logger "$p: nothing changed"
+            rm $newSettings
         else
-        cp $newSettings $settings
-        rm $newSettings
-        logger "$p: settings changed $settings rewritten"
+            cp $newSettings $settings
+            rm $newSettings
+            logger "$p: settings changed $settings rewritten"
         fi
     else
         logger "$p: some parameters are missing - refusing to continue"
@@ -697,11 +697,11 @@ tf2x() {
 
     if echo "$in" | grep -i true >/dev/null 2>&1
     then
-    echo "X"
-    logger "$p: '$in' -> 'X'"
+        echo "X"
+        logger "$p: '$in' -> 'X'"
     else
-    echo ""
-    logger "$p: '$in' -> ' '"
+        echo ""
+        logger "$p: '$in' -> ' '"
     fi
 
     return 0
@@ -714,11 +714,11 @@ x2tf() {
 
     if [ "$in" != 'X' ] && [ "$in" != 'x' ] && [ "$in" != 'y' ]
     then
-    echo 'false'
-    logger "$p: '$in' -> 'false'"
+        echo 'false'
+        logger "$p: '$in' -> 'false'"
     else
-    echo 'true'
-    logger "$p: '$in' -> 'true'"
+        echo 'true'
+        logger "$p: '$in' -> 'true'"
     fi
 
 }
@@ -748,8 +748,8 @@ emailConfig() {
 
     if [ $return_value != $DIALOG_OK ]
     then
-    logger "$p: dialog not OK => returing without any change"
-    return 1
+        logger "$p: dialog not OK => returing without any change"
+        return 1
     fi
 
     cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
@@ -839,8 +839,8 @@ czertainlyConfig() {
 
     if [ $return_value != $DIALOG_OK ]
     then
-    logger "$p: dialog not OK => returing without any change"
-    return 1
+        logger "$p: dialog not OK => returing without any change"
+        return 1
     fi
 
     cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
@@ -933,35 +933,35 @@ testCertificateKey() {
 
     if [ ! -e $cert ]
     then
-    emsg="$cert doesn't exists"
-    logger "$p: $emsg"
-    echo $emsg
-    return 1
+        emsg="$cert doesn't exists"
+        logger "$p: $emsg"
+        echo $emsg
+        return 1
     fi
 
     if [ ! -e $key ]
     then
-    emsg="$key doesn't exists"
-    logger "$p: $emsg"
-    echo $emsg
-    return 1
+        emsg="$key doesn't exists"
+        logger "$p: $emsg"
+        echo $emsg
+        return 1
     fi
 
     if ! key_modulus=`openssl rsa -noout -modulus -in $key`
     then
-    emsg="unable to get modulus of private key in $key"
-    logger "$p: $emsg"
-    echo $emsg
-    return 1
+        emsg="unable to get modulus of private key in $key"
+        logger "$p: $emsg"
+        echo $emsg
+        return 1
     fi
 
     # with certificate it is more complicated, there might be more
     # than one folowing awk block prints modulus of all of them
     if awk -v cmd='openssl x509 -noout -modulus' '/BEGIN/{close(cmd)}; {print | cmd}' < $cert | grep "$key_modulus" > /dev/null
     then
-    logger "$p: match"
-    # modulus of the key found in modulus of certs in $cert
-    return 0
+        logger "$p: match"
+        # modulus of the key found in modulus of certs in $cert
+        return 0
     fi
 
     emsg="private key doesn't match provided certificate"
@@ -991,8 +991,8 @@ ingressTLS() {
 
     if [ $return_value != $DIALOG_OK ]
     then
-    logger "$p: dialog not OK => returing without any change"
-    return 1
+        logger "$p: dialog not OK => returing without any change"
+        return 1
     fi
 
     cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
@@ -1045,18 +1045,18 @@ testTrustedCAfile() {
 
     if [ ! -e $certs ]
     then
-    emsg="unable to read $certs"
-    logger "$p: $emsg"
-    echo $emsg
-    return 1
+        emsg="unable to read $certs"
+        logger "$p: $emsg"
+        echo $emsg
+        return 1
     fi
 
     cnt=`awk -v cmd='openssl x509 -noout -subject ' '/BEGIN/{close(cmd)}; {print | cmd}' < $certs | wc -l`
 
     if [ $cnt -gt 0 ]
     then
-    logger "$p: found more than 0 certs ($cnt)"
-    return 0
+        logger "$p: found more than 0 certs ($cnt)"
+        return 0
     fi
 
     emsg="unable to parse $certs";
@@ -1082,8 +1082,8 @@ trustedCA() {
 
     if [ $return_value != $DIALOG_OK ]
     then
-    logger "$p: dialog not OK => returing without any change"
-    return 1
+        logger "$p: dialog not OK => returing without any change"
+        return 1
     fi
 
     cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
@@ -1099,22 +1099,22 @@ trustedCA() {
     then
         if testRes=$(testTrustedCAfile "$_trustedCA")
         then
-        echo "---
-trustedCA_file: $_trustedCA
-" >> $newSettings
+            echo "---
+    trustedCA_file: $_trustedCA
+    " >> $newSettings
 
-        if `diff $newSettings $settings >/dev/null 2>&1`
-        then
-            logger "$p: nothing changed"
-            rm $newSettings
+            if `diff $newSettings $settings >/dev/null 2>&1`
+            then
+                logger "$p: nothing changed"
+                rm $newSettings
+            else
+                cp $newSettings $settings && rm $newSettings
+                logger "$p: settings changed $settings rewritten"
+            fi
         else
-            cp $newSettings $settings && rm $newSettings
-            logger "$p: settings changed $settings rewritten"
-        fi
-        else
-        # testCertificateNotOK
-        logger "$p: test not OK $testRes";
-        errorMessage "$testRes"
+            # testCertificateNotOK
+            logger "$p: test not OK $testRes";
+            errorMessage "$testRes"
         fi
     else
         logger "$p: THE ONLY ONE parameter IS empty - zeroizing $settings"
@@ -1140,35 +1140,35 @@ changeHostname() {
 
     if [ $return_value != $DIALOG_OK ]
     then
-    logger "$p: dialog not OK => returing without any change"
-    return 1
+        logger "$p: dialog not OK => returing without any change"
+        return 1
     fi
 
     cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
-    read -r _hostname
+        read -r _hostname
 
-    lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
+        lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
-    logger "$p: hostname '$hostname' => '$_hostname'"
+        logger "$p: hostname '$hostname' => '$_hostname'"
 
-    newSettings=`mktemp /tmp/czertainly-manager.trustedCA.XXXXXX`
+        newSettings=`mktemp /tmp/czertainly-manager.trustedCA.XXXXXX`
 
-    if [ "x$_hostname" != 'x' ] && [ "x$hostname" != "x$_hostname" ]
-    then
-        if sudo /usr/bin/czertainly-update-hostname "$_hostname"
+        if [ "x$_hostname" != 'x' ] && [ "x$hostname" != "x$_hostname" ]
         then
-        infoMessage "After hostname change reboot is required. Press OK to reboot"
-        clear -x
-        echo "Rebooting..."
-        sudo /sbin/shutdown -r now
-        sleep 360
+            if sudo /usr/bin/czertainly-update-hostname "$_hostname"
+            then
+                infoMessage "After hostname change reboot is required. Press OK to reboot"
+                clear -x
+                echo "Rebooting..."
+                sudo /sbin/shutdown -r now
+                sleep 360
+            else
+                logger "$p: czertainly-update-hostname failed"
+                errorMessage "Hostname update failed."
+            fi
         else
-        logger "$p: czertainly-update-hostname failed"
-        errorMessage "Hostname update failed."
+            logger "$p: hostname not changed"
         fi
-    else
-        logger "$p: hostname not changed"
-    fi
     }
 }
 
@@ -1196,42 +1196,42 @@ docker() {
 
     if [ $return_value != $DIALOG_OK ]
     then
-    logger "$p: dialog not OK => returing without any change"
-    return 1
+        logger "$p: dialog not OK => returing without any change"
+        return 1
     fi
 
     cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
-    read -r _server
-    read -r _username
-    read -r _password
-    read -r _email
+        read -r _server
+        read -r _username
+        read -r _password
+        read -r _email
 
-    lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
+        lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
-    logger "$p: username  '$username' => '$_username'"
-    logger "$p: password  '$password' => '$_password'"
-    logger "$p: server    '$server' => '$_server'"
-    logger "$p: email     '$email' => '$_email'"
+        logger "$p: username  '$username' => '$_username'"
+        logger "$p: password  '$password' => '$_password'"
+        logger "$p: server    '$server' => '$_server'"
+        logger "$p: email     '$email' => '$_email'"
 
-    newSettings=`mktemp /tmp/czertainly-manager.docker.XXXXXX`
+        newSettings=`mktemp /tmp/czertainly-manager.docker.XXXXXX`
 
-    echo "---
-docker:" > $newSettings
-    [ "$_server"   != '' ] && echo "  server: $_server"     >> $newSettings
-    [ "$_email"    != '' ] && echo "  email: $_email"       >> $newSettings
-    [ "$secret"    != '' ] && echo "  secret: $secret"      >> $newSettings
-    [ "$_username" != '' ] && echo "  username: $_username" >> $newSettings
-    [ "$_password" != '' ] && echo "  password: $_password" >> $newSettings
+        echo "---
+    docker:" > $newSettings
+        [ "$_server"   != '' ] && echo "  server: $_server"     >> $newSettings
+        [ "$_email"    != '' ] && echo "  email: $_email"       >> $newSettings
+        [ "$secret"    != '' ] && echo "  secret: $secret"      >> $newSettings
+        [ "$_username" != '' ] && echo "  username: $_username" >> $newSettings
+        [ "$_password" != '' ] && echo "  password: $_password" >> $newSettings
 
-    if `diff $newSettings $settings >/dev/null 2>&1`
-    then
-        logger "$p: nothing changed"
-        rm $newSettings
-    else
-        cp $newSettings $settings
-        rm $newSettings
-        logger "$p: settings changed $settings rewritten"
-    fi
+        if `diff $newSettings $settings >/dev/null 2>&1`
+        then
+            logger "$p: nothing changed"
+            rm $newSettings
+        else
+            cp $newSettings $settings
+            rm $newSettings
+            logger "$p: settings changed $settings rewritten"
+        fi
     }
 }
 
@@ -1247,7 +1247,7 @@ execAnsible() {
     echo ""
     if [ "x$mode" == 'xfull-install' ]
     then
-    echo "First installation takes about 15 minutes, please be patient."
+        echo "First installation takes about 15 minutes, please be patient."
     fi
 
     $cmd
@@ -1255,19 +1255,19 @@ execAnsible() {
 
     if [ $result == 0 ]
     then
-    echo "Ansible finished successfully, result code: $result"
-    if [ "x$mode" == 'xfull-install' ]
-    then
-        echo ""
-        echo "Status of Kubernetes and CZERTAINLY"
-        /usr/bin/czertainly-status
-    fi
+        echo "Ansible finished successfully, result code: $result"
+        if [ "x$mode" == 'xfull-install' ]
+        then
+            echo ""
+            echo "Status of Kubernetes and CZERTAINLY"
+            /usr/bin/czertainly-status
+        fi
     else
-    echo "Ansible failed with error code: $result".
-    echo ""
-    echo "Error is very likely described in output above. If you need
-to contact support please provide content of file /var/log/ansible.log"
-    echo ""
+        echo "Ansible failed with error code: $result".
+        echo ""
+        echo "Error is very likely described in output above. If you need
+    to contact support please provide content of file /var/log/ansible.log"
+        echo ""
     fi
 
     echo "press enter key to continue"
@@ -1312,8 +1312,8 @@ main() {
 
     if [ $return_value != $DIALOG_OK ]
     then
-    logger "main_menu: not OK => terminating"
-    exit 1
+        logger "main_menu: not OK => terminating"
+        exit 1
     fi
 
     case $result in
@@ -1362,7 +1362,7 @@ main() {
             "sudo /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml" \
             "full-install"
         else
-        logger "$p: install canceled"
+            logger "$p: install canceled"
         fi
         ;;
     'status')
@@ -1372,14 +1372,14 @@ main() {
         logger "main_menu: advanced";
         while true;
         do
-        advancedMenu
-        aRet=$?
-        logger "main_menu: advanced menu returned=$aRet"
-        if [ $aRet == 1 ];
-        then
-            logger "main_menu: exiting advanced menu";
-            break
-        fi
+            advancedMenu
+            aRet=$?
+            logger "main_menu: advanced menu returned=$aRet"
+            if [ $aRet == 1 ];
+            then
+                logger "main_menu: exiting advanced menu";
+                break
+            fi
         done
         ;;
     *)
@@ -1389,4 +1389,4 @@ main() {
     esac
 }
 
-while true; do  main; done
+while true; do main; done
