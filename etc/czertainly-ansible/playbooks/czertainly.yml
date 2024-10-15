@@ -38,6 +38,9 @@
     - name: "Read proxy.yml"
       ansible.builtin.include_vars: /etc/czertainly-ansible/vars/proxy.yml
       tags: always
+    - name: "Read network.yml"
+      ansible.builtin.include_vars: /etc/czertainly-ansible/vars/network.yml
+      tags: always
     - name: "Read ingress.yml"
       ansible.builtin.include_vars: /etc/czertainly-ansible/vars/ingress.yml
       tags: always
@@ -87,6 +90,7 @@
   environment: '{{ proxy_env|dict2items|rejectattr("value", "equalto", "")|list|items2dict }}'
 
   roles:
+    - role: network
     - role: http-proxy
     - role: postgres
     - role: helm
