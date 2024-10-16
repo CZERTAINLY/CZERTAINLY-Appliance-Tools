@@ -22,3 +22,7 @@
 	path = etc/czertainly-ansible/roles/rke2
 	url = https://github.com/CZERTAINLY/ansible-role-rke2.git
 	branch = develop
+[submodule "etc/czertainly-ansible/roles/systemd-timesyncd"]
+	path = etc/czertainly-ansible/roles/systemd-timesyncd
+	url = git@github.com:semik/ansible-role-systemd-timesyncd.git
+	branch = develop

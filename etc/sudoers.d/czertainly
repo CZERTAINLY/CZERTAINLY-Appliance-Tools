@@ -7,6 +7,7 @@ czertainly ALL = NOPASSWD: /usr/bin/ansible-playbook /etc/czertainly-ansible/pla
 czertainly ALL = NOPASSWD: /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --tags czertainly
 czertainly ALL = NOPASSWD: /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --tags network
 czertainly ALL = NOPASSWD: /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --tags http_proxy
+czertainly ALL = NOPASSWD: /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --tags ntp
 czertainly ALL = NOPASSWD: /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --diff
 czertainly ALL = NOPASSWD: /usr/local/bin/rke2-uninstall.sh
 czertainly ALL = NOPASSWD: /usr/local/bin/update-hostname.sh

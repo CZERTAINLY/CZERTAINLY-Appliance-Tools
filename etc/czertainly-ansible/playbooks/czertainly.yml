@@ -41,6 +41,9 @@
     - name: "Read network.yml"
       ansible.builtin.include_vars: /etc/czertainly-ansible/vars/network.yml
       tags: always
+    - name: "Read ntp.yml"
+      ansible.builtin.include_vars: /etc/czertainly-ansible/vars/ntp.yml
+      tags: always
     - name: "Read ingress.yml"
       ansible.builtin.include_vars: /etc/czertainly-ansible/vars/ingress.yml
       tags: always
@@ -81,7 +84,9 @@
     # All CZERTAINLY services are running in parallel and causing big
     # stress on DB, it is better to support more simultaneous connections.
     postgres_max_connections: 250
-
+    # Following vars are used by systemd-timesyncd component
+    ntp_servers: "{{ ntp.servers }}"
+    system_timezone: "{{ ntp.timezone }}"
   # Now we filterout those dict keys which have environment valuables
   # which have value equal to ''. This and previous block is need to
   # be able to use HTTP_PROXY and fiends and without playbook/machine
@@ -91,6 +96,12 @@
 
   roles:
     - role: network
+    - role: systemd-timesyncd
+      apply:
+        tags:
+          - ntp
+      tags: ntp
+      when: ntp is defined
     - role: http-proxy
     - role: postgres
     - role: helm
