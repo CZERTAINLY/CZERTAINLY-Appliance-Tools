@@ -61,11 +61,12 @@ networkMenu=(
     'hostname'     "Configure hostname"
     'network'      "Configure network parameters"
     'proxyHTTP'    "Configure HTTP proxy parameters"
-#    'timeSync'     "Configure NTP parameters"
+    'timeSync'     "Configure NTP parameters"
     'exit'         "Exit network menu"
 )
 networkSettings='/etc/czertainly-ansible/vars/network.yml'
 proxySettings='/etc/czertainly-ansible/vars/proxy.yml'
+ntpSettings='/etc/czertainly-ansible/vars/ntp.yml'
 dockerSettings='/etc/czertainly-ansible/vars/docker.yml'
 czertainlySettings='/etc/czertainly-ansible/vars/czertainly.yml'
 databaseSettings='/etc/czertainly-ansible/vars/database.yml'
@@ -364,6 +365,9 @@ networkMenu() {
     'proxyHTTP')
         proxyHTTP
         ;;
+    'timeSync')
+        timeSync
+        ;;
     'exit')
         logger "$p: exit"
         echo "exit"
@@ -607,6 +611,77 @@ proxy:" > $newSettings
             dialog --backtitle "$backTitleCentered" --title "Warning" --msgbox "If you are changing HTTP Proxy parameters before the first CZERTAINLY installation, you have to close this terminal session and re-login back to make changes effective.
 
     If you are updating the existing installation, you have first reboot the appliance and then re-run the installation process to get the setting correctly propagated." 13 50
+        fi
+    else
+        logger "$p: all parameters are empty - zeroizing $settings"
+        cp /dev/null $settings
+    fi
+    }
+}
+
+timeSync() {
+    maxLen=120
+    maxInputLen=$[$eCOLS-20]
+    local p=$FUNCNAME
+    settings=$ntpSettings
+
+    timezone=`grep < $settings '^ *timezone: ' | sed "s/^ *timezone: *//"`
+    servers=`grep < $settings -A 1000 '^ *servers:'| grep '^ * -' | sed "s/^ *- *//" | tr "\n" "," | sed "s/, *$//"`
+
+    dialog --backtitle "$backTitleCentered" --title " NTP servers " \
+       --form "\nLeave all fields empty if you want time setting to be untouched.\n\nUse comma as a separator for timeservers and no spaces.\n" 15 $eCOLS 2 \
+       "Timezone:"       1 1 "$timezone"      1 14 $maxInputLen $maxLen \
+       "NTP servers:"    2 1 "$servers"    2 14 $maxInputLen $maxLen \
+       2>$tmpF
+    # get dialog's exit status
+    return_value=$?
+
+    if [ $return_value != $DIALOG_OK ]
+    then
+        logger "$p: dialog not OK => returing without any change"
+        return 1
+    fi
+
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
+    read -r _timezone
+    read -r _servers
+
+    lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
+
+    logger "$p: timezone   '$timezone' => '$_timezone'"
+    logger "$p: servers '$servers' => '$_servers'"
+
+    newSettings=`mktemp /tmp/czertainly-manager.ntp.XXXXXX`
+
+    if [ $lines -gt 0 ]
+    then
+        echo "---
+ntp:" > $newSettings
+        [ "$_timezone" != '' ] && echo "  timezone: $_timezone" >> $newSettings
+        if [ "$_servers" != '' ]
+        then
+            OFS=$IFS
+            IFS=','
+            echo "  servers:" >> $newSettings
+            read -ra no <<< "$_servers"
+            for i in "${no[@]}"; do
+                echo "    - $i" >> $newSettings
+            done
+            IFS=$OFS
+        fi
+
+        if `diff $newSettings $settings >/dev/null 2>&1`
+        then
+            logger "$p: nothing changed"
+            rm $newSettings
+        else
+            cp $newSettings $settings
+            rm $newSettings
+            logger "$p: settings changed $settings rewritten"
+            execAnsible \
+                "sudo /usr/bin/ansible-playbook /etc/czertainly-ansible/playbooks/czertainly.yml --tags ntp" \
+                "ntp"
+            logger "$p: ansible finished"
         fi
     else
         logger "$p: all parameters are empty - zeroizing $settings"
