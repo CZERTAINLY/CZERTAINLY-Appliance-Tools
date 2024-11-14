@@ -1,4 +1,4 @@
-czertainly-appliance-tools (2.13.2~rc9) stable; urgency=medium
+czertainly-appliance-tools (2.13.2) stable; urgency=medium
   * fix tags support broken by changing include to include_task
   * add HTTP proxy variables in both cases
   * add support for network config into TUI
@@ -7,7 +7,7 @@ czertainly-appliance-tools (2.13.2~rc9) stable; urgency=medium
   * remove deprecated MS ADCS Connector
   * raise defalt Helm Chart version to 2.13.1
 
- -- Jan Tomášek <jan.tomasek@3key.company>  Thu, 14 Nov 2024 15:00:00 +0200
+ -- Jan Tomášek <jan.tomasek@3key.company>  Thu, 14 Nov 2024 19:00:00 +0100
 
 czertainly-appliance-tools (2.13.1) stable; urgency=medium
   * add support for CT logs Discovery Provider
