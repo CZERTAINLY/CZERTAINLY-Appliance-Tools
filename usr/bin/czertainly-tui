@@ -874,7 +874,6 @@ czertainlyConfig() {
     version=`grep < $settings '^ *version: ' | sed "s/^ *version: *//"`
     commonCredentialProvider=$(tf2x $(grep < $settings '^ *commonCredentialProvider: ' | sed "s/^ *commonCredentialProvider: *//"))
     ejbcaNgConnector=$(tf2x $(grep < $settings '^ *ejbcaNgConnector: ' | sed "s/^ *ejbcaNgConnector: *//"))
-    msAdcsConnector=$(tf2x $(grep < $settings '^ *msAdcsConnector: ' | sed "s/^ *msAdcsConnector: *//"))
     pymsAdcsConnector=$(tf2x $(grep < $settings '^ *pymsAdcsConnector: ' | sed "s/^ *pymsAdcsConnector: *//"))
     hashicorpVaultConnector=$(tf2x $(grep < $settings '^ *hashicorpVaultConnector: ' | sed "s/^ *hashicorpVaultConnector: *//"))
     x509ComplianceProvider=$(tf2x $(grep < $settings '^ *x509ComplianceProvider: ' | sed "s/^ *x509ComplianceProvider: *//"))
@@ -896,18 +895,17 @@ czertainlyConfig() {
        "CZERTAINLY version:"              1 1 "$version"                       1 21 $maxInputLen $maxLen \
        "Common Credential Provider:"      2 1 "$commonCredentialProvider"      2 33 2            1 \
        "EJBCA NG Connector:"              3 1 "$ejbcaNgConnector"              3 33 2            1 \
-       "MS ADCS Connector (deprecated):"  4 1 "$msAdcsConnector"               4 33 2            1 \
-       "py MS ADCS Connector:"            5 1 "$pymsAdcsConnector"             5 33 2            1 \
-       "HashiCorp Vaul Connector:"        6 1 "$hashicorpVaultConnector"       6 33 2            1 \
-       "X509 Compliance Provider:"        7 1 "$x509ComplianceProvider"        7 33 2            1 \
-       "Cryptosense Discovery Provider:"  8 1 "$cryptosenseDiscoveryProvider"  8 33 2            1 \
-       "CT logs Discovery Provider:"      9 1 "$ctLogsDiscoveryProvider"       9 33 2            1 \
-       "Network Discovery Provider:"     10 1 "$networkDiscoveryProvider"     10 33 2            1 \
-       "Keystore Entity Provider:"       11 1 "$keystoreEntityProvider"       11 33 2            1 \
-       "Software Cryptography Provider:" 12 1 "$softwareCryptographyProvider" 12 33 2            1 \
-       "Keycloak IdP:"                   13 1 "$keycloak"                     13 33 2            1 \
-       "Utils Service:"                  14 1 "$utilsService"                 14 33 2            1 \
-       "email Provider:"                 15 1 "$emailProvider"                15 33 2            1 \
+       "py MS ADCS Connector:"            4 1 "$pymsAdcsConnector"             4 33 2            1 \
+       "HashiCorp Vaul Connector:"        5 1 "$hashicorpVaultConnector"       5 33 2            1 \
+       "X509 Compliance Provider:"        6 1 "$x509ComplianceProvider"        6 33 2            1 \
+       "Cryptosense Discovery Provider:"  7 1 "$cryptosenseDiscoveryProvider"  7 33 2            1 \
+       "CT logs Discovery Provider:"      8 1 "$ctLogsDiscoveryProvider"       8 33 2            1 \
+       "Network Discovery Provider:"      9 1 "$networkDiscoveryProvider"      9 33 2            1 \
+       "Keystore Entity Provider:"       10 1 "$keystoreEntityProvider"       10 33 2            1 \
+       "Software Cryptography Provider:" 11 1 "$softwareCryptographyProvider" 11 33 2            1 \
+       "Keycloak IdP:"                   12 1 "$keycloak"                     12 33 2            1 \
+       "Utils Service:"                  13 1 "$utilsService"                 13 33 2            1 \
+       "email Provider:"                 14 1 "$emailProvider"                14 33 2            1 \
        2>$tmpF
     # get dialog's exit status
     return_value=$?
@@ -922,7 +920,6 @@ czertainlyConfig() {
     read -r _version
     read -r _commonCredentialProvider
     read -r _ejbcaNgConnector
-    read -r _msAdcsConnector
     read -r _pymsAdcsConnector
     read -r _hashicorpVaultConnector
     read -r _x509ComplianceProvider
@@ -940,7 +937,6 @@ czertainlyConfig() {
     logger "$p: version                      '$version'                      => '$_version'"
     logger "$p: commonCredentialProvider     '$commonCredentialProvider'     => '$_commonCredentialProvider'"
     logger "$p: ejbcaNgConnector             '$ejbcaNgConnector'             => '$_ejbcaNgConnector'"
-    logger "$p: msAdcsConnector              '$msAdcsConnector'              => '$_msAdcsConnector'"
     logger "$p: pymsAdcsConnector            '$pymsAdcsConnector'            => '$_pymsAdcsConnector'"
     logger "$p: hashicorpVaultConnector      '$hashicorpVaultConnector'      => '$_hashicorpVaultConnector'"
     logger "$p: x509ComplianceProvider       '$x509ComplianceProvider'       => '$_x509ComplianceProvider'"
@@ -957,7 +953,6 @@ czertainlyConfig() {
 
     _commonCredentialProvider=$(x2tf     "$_commonCredentialProvider")
     _ejbcaNgConnector=$(x2tf             "$_ejbcaNgConnector")
-    _msAdcsConnector=$(x2tf              "$_msAdcsConnector")
     _pymsAdcsConnector=$(x2tf            "$_pymsAdcsConnector")
     _hashicorpVaultConnector=$(x2tf      "$_hashicorpVaultConnector")
     _x509ComplianceProvider=$(x2tf       "$_x509ComplianceProvider")
@@ -975,7 +970,6 @@ czertainly:
   version: $_version
   commonCredentialProvider: $_commonCredentialProvider
   ejbcaNgConnector: $_ejbcaNgConnector
-  msAdcsConnector: $_msAdcsConnector
   pymsAdcsConnector: $_pymsAdcsConnector
   hashicorpVaultConnector: $_hashicorpVaultConnector
   x509ComplianceProvider: $_x509ComplianceProvider
