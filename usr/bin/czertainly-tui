@@ -1285,7 +1285,7 @@ docker() {
         newSettings=`mktemp /tmp/czertainly-manager.docker.XXXXXX`
 
         echo "---
-    docker:" > $newSettings
+docker:" > $newSettings
         [ "$_server"   != '' ] && echo "  server: $_server"     >> $newSettings
         [ "$_email"    != '' ] && echo "  email: $_email"       >> $newSettings
         [ "$secret"    != '' ] && echo "  secret: $secret"      >> $newSettings
