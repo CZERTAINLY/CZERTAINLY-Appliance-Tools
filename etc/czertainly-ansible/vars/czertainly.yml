@@ -1,10 +1,10 @@
 ---
 czertainly:
-  version: 2.13.1
+  version: 2.14.0
   commonCredentialProvider: true
   ejbcaNgConnector: true
-  pymsAdcsConnector: false
-  hashicorpVaultConnector: false
+  pymsAdcsConnector: true
+  hashicorpVaultConnector: true
   x509ComplianceProvider: true
   cryptosenseDiscoveryProvider: false
   ctLogsDiscoveryProvider: true
