@@ -1,7 +1,7 @@
 ---
 on:
   push:
-    branches: [main, master, develop, fix-deb-build]
+    branches: [main, master, develop]
 
 jobs:
   build:
