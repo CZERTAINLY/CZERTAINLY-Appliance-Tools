@@ -1201,7 +1201,7 @@ changeHostname() {
     hostname=`hostname -f`
 
     dialog --backtitle "$backTitleCentered" --title " System hostname " \
-       --form "\nWARNING: Changing the hostname will reboot the system.\n\nProvide fully qualifiled hostname" 12 $eCOLS 1 \
+       --form "\nWARNING: Changing the hostname will reboot the system.\n\nProvide fully qualified hostname. It has to be all lowercase and starting with a letter." 12 $eCOLS 1 \
        ""  1 1 "$hostname" 1 2 $maxInputLen $maxLen \
        2>$tmpF
     # get dialog's exit status
@@ -1213,7 +1213,7 @@ changeHostname() {
         return 1
     fi
 
-    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | tr '[A-Z]' '[a-z'] | {
         read -r _hostname
 
         lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
