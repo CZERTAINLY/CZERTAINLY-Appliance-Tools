@@ -12,6 +12,10 @@
     - name: CZERTAINLY versions
       ansible.builtin.debug:
         msg: "{{ versions.stdout }}"
+    - name: Assert lowercase hostname
+      ansible.builtin.assert:
+        that: ansible_fqdn is match("^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$")
+        fail_msg: "System hostname, has to be all lowercase, {{ ansible_fqdn }} doesn't match that rule. This is enforced by Kubernetes."
     - name: Check if keycloak file exists
       ansible.builtin.stat:
         path: "/etc/czertainly-ansible/vars/keycloak.yml"
