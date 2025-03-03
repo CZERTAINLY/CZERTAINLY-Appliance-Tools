@@ -1,8 +1,9 @@
-czertainly-appliance-tools (2.14.1~rc3) stable; urgency=medium
+czertainly-appliance-tools (2.14.1~rc4) stable; urgency=medium
   * install pyADCS connector by default
   * install HashiCorp Vault connector by default
   * assert hostnames lowercase
   * fix .kube/config permisions
+  * display trustedCA preview
 
  -- Jan Tomášek <jan.tomasek@3key.company>  Wed, 12 Feb 2024 19:00:00 +0100
 
