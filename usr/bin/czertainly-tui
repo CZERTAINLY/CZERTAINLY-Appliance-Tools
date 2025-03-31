@@ -1120,7 +1120,7 @@ testTrustedCAfile() {
         return 1
     fi
 
-    cnt=`awk -v cmd='openssl x509 -noout -subject ' '/BEGIN/{close(cmd)}; {print | cmd}' < $certs | wc -l`
+    cnt=`cat $certs | grep -v '^#' | awk -v cmd='openssl x509 -noout -subject ' '/BEGIN/{close(cmd)}; {print | cmd}' | wc -l`
 
     if [ $cnt -gt 0 ]
     then
@@ -1168,6 +1168,38 @@ trustedCA() {
     then
         if testRes=$(testTrustedCAfile "$_trustedCA")
         then
+            trustedCAText=`mktemp /tmp/czertainly-manager.XXXXXX`
+
+            cat $_trustedCA | grep -v '^#' | awk 'BEGIN {
+    cmd="openssl x509 -noout -subject -issuer -dates -serial -nameopt RFC2253,-esc_msb"
+    cert="";
+    in_cert=0
+    first_cert=1
+}
+/BEGIN CERTIFICATE/ {
+    cert=$0;
+    in_cert=1;
+    next
+}
+in_cert {
+    cert = cert "\n" $0
+}
+/END CERTIFICATE/ {
+    in_cert=0;
+    if (first_cert) {
+        first_cert=0
+    } else {
+        print ""
+    }
+    print cert | cmd;
+    close(cmd);
+}' > $trustedCAText
+	    rows=`cat $trustedCAText | wc -l`
+	    rows=$[$rows+5]
+	    min=$(( $rows < $eRows ? $rows : $eRows ))
+            dialog --backtitle "$backTitleCentered" --title " Trusted CAs preview " --exit-label 'OK' --textbox $trustedCAText $rows $eCOLS
+            rm $trustedCAText
+
             echo "---
     trustedCA_file: $_trustedCA
     " >> $newSettings
@@ -1201,7 +1233,7 @@ changeHostname() {
     hostname=`hostname -f`
 
     dialog --backtitle "$backTitleCentered" --title " System hostname " \
-       --form "\nWARNING: Changing the hostname will reboot the system.\n\nProvide fully qualifiled hostname" 12 $eCOLS 1 \
+       --form "\nWARNING: Changing the hostname will reboot the system.\n\nProvide fully qualified hostname. It has to be all lowercase and starting with a letter." 12 $eCOLS 1 \
        ""  1 1 "$hostname" 1 2 $maxInputLen $maxLen \
        2>$tmpF
     # get dialog's exit status
@@ -1213,7 +1245,7 @@ changeHostname() {
         return 1
     fi
 
-    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
+    cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | tr '[A-Z]' '[a-z'] | {
         read -r _hostname
 
         lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
