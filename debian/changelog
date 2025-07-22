@@ -1,3 +1,9 @@
+czertainly-appliance-tools (2.15.0~rc3) stable; urgency=medium
+  * install Utils by default
+  * install Webhook-Notification-Provider by default
+
+ -- Jan Tomášek <jan.tomasek@3key.company>  Tue, 22 Jul 2025 15:00:00 +0200
+
 czertainly-appliance-tools (2.14.1) stable; urgency=medium
   * install pyADCS connector by default
   * install HashiCorp Vault connector by default
@@ -5,7 +11,7 @@ czertainly-appliance-tools (2.14.1) stable; urgency=medium
   * fix .kube/config permisions
   * display trustedCA preview
 
- -- Jan Tomášek <jan.tomasek@3key.company>  Mon, 31 Mar 2024 16:00:00 +0200
+ -- Jan Tomášek <jan.tomasek@3key.company>  Mon, 31 Mar 2025 16:00:00 +0200
 
 czertainly-appliance-tools (2.13.2-1) stable; urgency=medium
   * fix docker.yaml formating

@@ -12,5 +12,6 @@ czertainly:
   keystoreEntityProvider: true
   softwareCryptographyProvider: true
   keycloak: true
-  utilsService: false
+  utilsService: true
+  webhookNotificationProvider: true
   emailProvider: false
