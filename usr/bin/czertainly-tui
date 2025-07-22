@@ -885,6 +885,7 @@ czertainlyConfig() {
     keycloak=$(tf2x $(grep < $settings '^ *keycloak: ' | sed "s/^ *keycloak: *//"))
     utilsService=$(tf2x $(grep < $settings '^ *utilsService: ' | sed "s/^ *utilsService: *//"))
     emailProvider=$(tf2x $(grep < $settings '^ *emailProvider: ' | sed "s/^ *emailProvider: *//"))
+    webhookNotificationProvider=$(tf2x $(grep < $settings '^ *webhookNotificationProvider: ' | sed "s/^ *webhookNotificationProvider: *//"))
 
     # dialog --form require parameters height width formheight
     #  * at this moment we need 13 parameters from user
@@ -894,18 +895,19 @@ czertainlyConfig() {
        --form "Parameters of CZERTAINLY instalation" 0 $eCOLS 13 \
        "CZERTAINLY version:"              1 1 "$version"                       1 21 $maxInputLen $maxLen \
        "Common Credential Provider:"      2 1 "$commonCredentialProvider"      2 33 2            1 \
-       "EJBCA NG Connector:"              3 1 "$ejbcaNgConnector"              3 33 2            1 \
-       "py MS ADCS Connector:"            4 1 "$pymsAdcsConnector"             4 33 2            1 \
-       "HashiCorp Vaul Connector:"        5 1 "$hashicorpVaultConnector"       5 33 2            1 \
-       "X509 Compliance Provider:"        6 1 "$x509ComplianceProvider"        6 33 2            1 \
-       "Cryptosense Discovery Provider:"  7 1 "$cryptosenseDiscoveryProvider"  7 33 2            1 \
-       "CT logs Discovery Provider:"      8 1 "$ctLogsDiscoveryProvider"       8 33 2            1 \
-       "Network Discovery Provider:"      9 1 "$networkDiscoveryProvider"      9 33 2            1 \
-       "Keystore Entity Provider:"       10 1 "$keystoreEntityProvider"       10 33 2            1 \
-       "Software Cryptography Provider:" 11 1 "$softwareCryptographyProvider" 11 33 2            1 \
-       "Keycloak IdP:"                   12 1 "$keycloak"                     12 33 2            1 \
+       "Cryptosense Discovery Provider:"  3 1 "$cryptosenseDiscoveryProvider"  3 33 2            1 \
+       "CT logs Discovery Provider:"      4 1 "$ctLogsDiscoveryProvider"       4 33 2            1 \
+       "EJBCA NG Connector:"              5 1 "$ejbcaNgConnector"              5 33 2            1 \
+       "email Provider:"                  6 1 "$emailProvider"                 6 33 2            1 \
+       "HashiCorp Vaul Connector:"        7 1 "$hashicorpVaultConnector"       7 33 2            1 \
+       "Keycloak IdP:"                    8 1 "$keycloak"                      8 33 2            1 \
+       "Keystore Entity Provider:"        9 1 "$keystoreEntityProvider"        9 33 2            1 \
+       "Network Discovery Provider:"     10 1 "$networkDiscoveryProvider"     10 33 2            1 \
+       "py MS ADCS Connector:"           11 1 "$pymsAdcsConnector"            11 33 2            1 \
+       "Software Cryptography Provider:" 12 1 "$softwareCryptographyProvider" 12 33 2            1 \
        "Utils Service:"                  13 1 "$utilsService"                 13 33 2            1 \
-       "email Provider:"                 14 1 "$emailProvider"                14 33 2            1 \
+       "webhook Notification Provider:"  14 1 "$webhookNotificationProvider"  14 33 2            1 \
+       "X509 Compliance Provider:"       15 1 "$x509ComplianceProvider"       15 33 2            1 \
        2>$tmpF
     # get dialog's exit status
     return_value=$?
@@ -931,6 +933,7 @@ czertainlyConfig() {
     read -r _keycloak
     read -r _utilsService
     read -r _emailProvider
+    read -r _webhookNotificationProvider
 
     lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
@@ -948,6 +951,7 @@ czertainlyConfig() {
     logger "$p: keycloak                     '$keycloak'                     => '$_keycloak'"
     logger "$p: utilsService                 '$utilsService'                 => '$_utilsService'"
     logger "$p: emailProvider                '$emailProvider'                => '$_emailProvider'"
+    logger "$p: webhookNotificationProvider  '$webhookNotificationProvider'  => '$_webhookNotificationProvider'"
 
     newSettings=`mktemp /tmp/czertainly-manager.czertainly.XXXXXX`
 
@@ -964,6 +968,7 @@ czertainlyConfig() {
     _keycloak=$(x2tf                     "$_keycloak")
     _utilsService=$(x2tf                 "$_utilsService")
     _emailProvider=$(x2tf                "$_emailProvider")
+    _webhookNotificationProvider=$(x2tf  "$_webhookNotificationProvider")
 
     echo "---
 czertainly:
@@ -981,6 +986,7 @@ czertainly:
   keycloak: $_keycloak
   utilsService: $_utilsService
   emailProvider: $_emailProvider
+  webhookNotificationProvider: $_webhookNotificationProvider
 " > $newSettings
 
     if `diff $newSettings $settings >/dev/null 2>&1`
