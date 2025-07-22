@@ -1,4 +1,4 @@
-czertainly-appliance-tools (2.15.0~rc4) stable; urgency=medium
+czertainly-appliance-tools (2.15.0) stable; urgency=medium
   * install Utils by default
   * install Webhook-Notification-Provider by default
   * raise version to 2.15.0
