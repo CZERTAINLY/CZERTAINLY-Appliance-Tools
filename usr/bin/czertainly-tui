@@ -918,75 +918,76 @@ czertainlyConfig() {
         return 1
     fi
 
+    # read selected components from temporary file written by dialog
     cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | {
     read -r _version
     read -r _commonCredentialProvider
-    read -r _ejbcaNgConnector
-    read -r _pymsAdcsConnector
-    read -r _hashicorpVaultConnector
-    read -r _x509ComplianceProvider
     read -r _cryptosenseDiscoveryProvider
     read -r _ctLogsDiscoveryProvider
-    read -r _networkDiscoveryProvider
-    read -r _keystoreEntityProvider
-    read -r _softwareCryptographyProvider
-    read -r _keycloak
-    read -r _utilsService
+    read -r _ejbcaNgConnector
     read -r _emailProvider
+    read -r _hashicorpVaultConnector
+    read -r _keycloak
+    read -r _keystoreEntityProvider
+    read -r _networkDiscoveryProvider
+    read -r _pymsAdcsConnector
+    read -r _softwareCryptographyProvider
+    read -r _utilsService
     read -r _webhookNotificationProvider
+    read -r _x509ComplianceProvider
 
     lines=`cat $tmpF | sed "s/^ //gm" | sed "s/ $//gm" | grep -v '^$' | wc -l`
 
     logger "$p: version                      '$version'                      => '$_version'"
     logger "$p: commonCredentialProvider     '$commonCredentialProvider'     => '$_commonCredentialProvider'"
-    logger "$p: ejbcaNgConnector             '$ejbcaNgConnector'             => '$_ejbcaNgConnector'"
-    logger "$p: pymsAdcsConnector            '$pymsAdcsConnector'            => '$_pymsAdcsConnector'"
-    logger "$p: hashicorpVaultConnector      '$hashicorpVaultConnector'      => '$_hashicorpVaultConnector'"
-    logger "$p: x509ComplianceProvider       '$x509ComplianceProvider'       => '$_x509ComplianceProvider'"
     logger "$p: cryptosenseDiscoveryProvider '$cryptosenseDiscoveryProvider' => '$_cryptosenseDiscoveryProvider'"
     logger "$p: ctLogsDiscoveryProvider      '$ctLogsDiscoveryProvider'      => '$_ctLogsDiscoveryProvider'"
-    logger "$p: networkDiscoveryProvider     '$networkDiscoveryProvider'     => '$_networkDiscoveryProvider'"
-    logger "$p: keystoreEntityProvider       '$keystoreEntityProvider'       => '$_keystoreEntityProvider'"
-    logger "$p: softwareCryptographyProvider '$softwareCryptographyProvider' => '$_softwareCryptographyProvider'"
-    logger "$p: keycloak                     '$keycloak'                     => '$_keycloak'"
-    logger "$p: utilsService                 '$utilsService'                 => '$_utilsService'"
+    logger "$p: ejbcaNgConnector             '$ejbcaNgConnector'             => '$_ejbcaNgConnector'"
     logger "$p: emailProvider                '$emailProvider'                => '$_emailProvider'"
+    logger "$p: hashicorpVaultConnector      '$hashicorpVaultConnector'      => '$_hashicorpVaultConnector'"
+    logger "$p: keycloak                     '$keycloak'                     => '$_keycloak'"
+    logger "$p: keystoreEntityProvider       '$keystoreEntityProvider'       => '$_keystoreEntityProvider'"
+    logger "$p: networkDiscoveryProvider     '$networkDiscoveryProvider'     => '$_networkDiscoveryProvider'"
+    logger "$p: pymsAdcsConnector            '$pymsAdcsConnector'            => '$_pymsAdcsConnector'"
+    logger "$p: softwareCryptographyProvider '$softwareCryptographyProvider' => '$_softwareCryptographyProvider'"
+    logger "$p: utilsService                 '$utilsService'                 => '$_utilsService'"
     logger "$p: webhookNotificationProvider  '$webhookNotificationProvider'  => '$_webhookNotificationProvider'"
+    logger "$p: x509ComplianceProvider       '$x509ComplianceProvider'       => '$_x509ComplianceProvider'"
 
     newSettings=`mktemp /tmp/czertainly-manager.czertainly.XXXXXX`
 
     _commonCredentialProvider=$(x2tf     "$_commonCredentialProvider")
-    _ejbcaNgConnector=$(x2tf             "$_ejbcaNgConnector")
-    _pymsAdcsConnector=$(x2tf            "$_pymsAdcsConnector")
-    _hashicorpVaultConnector=$(x2tf      "$_hashicorpVaultConnector")
-    _x509ComplianceProvider=$(x2tf       "$_x509ComplianceProvider")
     _cryptosenseDiscoveryProvider=$(x2tf "$_cryptosenseDiscoveryProvider")
     _ctLogsDiscoveryProvider=$(x2tf      "$_ctLogsDiscoveryProvider")
-    _networkDiscoveryProvider=$(x2tf     "$_networkDiscoveryProvider")
-    _keystoreEntityProvider=$(x2tf       "$_keystoreEntityProvider")
-    _softwareCryptographyProvider=$(x2tf "$_softwareCryptographyProvider")
-    _keycloak=$(x2tf                     "$_keycloak")
-    _utilsService=$(x2tf                 "$_utilsService")
+    _ejbcaNgConnector=$(x2tf             "$_ejbcaNgConnector")
     _emailProvider=$(x2tf                "$_emailProvider")
+    _hashicorpVaultConnector=$(x2tf      "$_hashicorpVaultConnector")
+    _keycloak=$(x2tf                     "$_keycloak")
+    _keystoreEntityProvider=$(x2tf       "$_keystoreEntityProvider")
+    _networkDiscoveryProvider=$(x2tf     "$_networkDiscoveryProvider")
+    _pymsAdcsConnector=$(x2tf            "$_pymsAdcsConnector")
+    _softwareCryptographyProvider=$(x2tf "$_softwareCryptographyProvider")
+    _utilsService=$(x2tf                 "$_utilsService")
     _webhookNotificationProvider=$(x2tf  "$_webhookNotificationProvider")
+    _x509ComplianceProvider=$(x2tf       "$_x509ComplianceProvider")
 
     echo "---
 czertainly:
   version: $_version
   commonCredentialProvider: $_commonCredentialProvider
-  ejbcaNgConnector: $_ejbcaNgConnector
-  pymsAdcsConnector: $_pymsAdcsConnector
-  hashicorpVaultConnector: $_hashicorpVaultConnector
-  x509ComplianceProvider: $_x509ComplianceProvider
   cryptosenseDiscoveryProvider: $_cryptosenseDiscoveryProvider
   ctLogsDiscoveryProvider: $_ctLogsDiscoveryProvider
-  networkDiscoveryProvider: $_networkDiscoveryProvider
-  keystoreEntityProvider: $_keystoreEntityProvider
-  softwareCryptographyProvider: $_softwareCryptographyProvider
-  keycloak: $_keycloak
-  utilsService: $_utilsService
+  ejbcaNgConnector: $_ejbcaNgConnector
   emailProvider: $_emailProvider
+  hashicorpVaultConnector: $_hashicorpVaultConnector
+  keycloak: $_keycloak
+  keystoreEntityProvider: $_keystoreEntityProvider
+  networkDiscoveryProvider: $_networkDiscoveryProvider
+  pymsAdcsConnector: $_pymsAdcsConnector
+  softwareCryptographyProvider: $_softwareCryptographyProvider
+  utilsService: $_utilsService
   webhookNotificationProvider: $_webhookNotificationProvider
+  x509ComplianceProvider: $_x509ComplianceProvider
 " > $newSettings
 
     if `diff $newSettings $settings >/dev/null 2>&1`
