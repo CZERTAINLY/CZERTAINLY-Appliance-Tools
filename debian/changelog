@@ -1,3 +1,8 @@
+czertainly-appliance-tools (2.15.1-1) stable; urgency=medium
+  * fixed sorting issue in czertainlyConfig()
+
+ -- Jan Tomášek <jan.tomasek@3key.company>  Tue, 26 Aug 2025 13:00:00 +0200
+
 czertainly-appliance-tools (2.15.1) stable; urgency=medium
   * raise version to 2.15.1
 
