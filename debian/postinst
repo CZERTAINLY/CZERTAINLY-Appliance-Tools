@@ -21,4 +21,20 @@ do
   fi
 done
 
+# Remove the abandoned Helm repo file if it exists
+REPO_FILE="/etc/apt/sources.list.d/baltocdn_com_helm_stable_debian.list"
+if [ -f "$REPO_FILE" ]; then
+    rm -f "$REPO_FILE"
+    echo "Removed abandoned Helm apt repository: $REPO_FILE"
+
+    # Remove keyring if previously removed repo was using it
+    KEYRING="/usr/share/keyrings/helm.asc"
+    if [ -f "$KEYRING" ]; then
+        rm -f "$KEYRING"
+        echo "Removed Helm keyring: $KEYRING"
+    fi
+fi
+
+
+
 #DEBHELPER#

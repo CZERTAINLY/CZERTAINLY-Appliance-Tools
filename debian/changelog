@@ -1,3 +1,8 @@
+czertainly-appliance-tools (2.15.1-2) stable; urgency=medium
+  * changed Helm deb packages source
+
+ -- Jan Tomášek <jan.tomasek@3key.company>  Tue, 9 Aug 2025 11:28:00 +0200
+
 czertainly-appliance-tools (2.15.1-1) stable; urgency=medium
   * fixed sorting issue in czertainlyConfig()
 
