@@ -52,7 +52,7 @@ czertainly-appliance-tools (2.13.2) stable; urgency=medium
 
 czertainly-appliance-tools (2.13.1) stable; urgency=medium
   * add support for CT logs Discovery Provider
-7
+
  -- Jan Tomášek <jan.tomasek@3key.company>  Wed, 18 Sep 2024 19:05:00 +0200
 
 czertainly-appliance-tools (2.13.0) stable; urgency=medium
